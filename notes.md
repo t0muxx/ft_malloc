@@ -24,4 +24,12 @@ Malloc method :
 #define aligned_OK(m)  ((m & MALLOC_ALIGN_MASK) == 0))
 ```
 
+```
+struct s_arena {
+	void *tiny;
+	size_t size_tiny;
+	void *small;
+	size_t size_small;
 
+} t_arena;
+```
