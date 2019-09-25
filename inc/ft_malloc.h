@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/25 11:36:45 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/09/25 15:56:39 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,17 @@
 #include <errno.h>
 
 #define ALIGN 16
-#define SZ_ZONE_TINY 4096*16
+//#define SZ_ZONE_TINY 4096*16
+#define SZ_ZONE_TINY 1024*4
 #define SZ_TINY ((SZ_ZONE_TINY/100)-sizeof(struct s_chunk))+(ALIGN-((SZ_ZONE_TINY/100)-sizeof(struct s_chunk))%16)
 #define SZ_ZONE_MEDIUM 4096*32
 #define SZ_MEDIUM ((SZ_ZONE_MEDIUM/100)-sizeof(struct s_chunk))+(ALIGN-((SZ_ZONE_MEDIUM/100)-sizeof(struct s_chunk))%16)
-#define DEBUG 1
 
-#define ZONE2MEM(x) ((void *)x + sizeof(t_zone))
+#define DEBUG 1
+//#define DEBUG_CHUNK 1
+#define DEBUG_ZONE 1
+//#define DEBUG_FREE 1
+// Check norm
 #define ALIGN_SIZE(x) (x + ALIGN - (x%ALIGN))
 
 enum e_status {
@@ -33,8 +37,10 @@ enum e_status {
 
 typedef struct	s_zone
 {
-	size_t	size;
-	size_t	used;
+	size_t			size;
+	size_t			used;
+	struct s_zone	*prev;
+	struct s_zone	*next;
 
 }				t_zone;
 
@@ -61,5 +67,11 @@ extern t_malloc g_malloc;
 
 void	*ft_malloc(size_t size);
 int		init_malloc(t_malloc *g_malloc);
-void	print_chunks(t_chunk *chunk, char * chunk_name);
 void	ft_free(void *ptr);
+void	*zone_2_mem(t_zone *zone);
+int		add_zone(t_zone **zone, size_t size);
+void  *search_zone(t_zone **zone, size_t size, size_t sz_zone);
+
+//DEBUG : 
+void	print_chunks(t_chunk *chunk, char * chunk_name);
+void print_zones(t_zone *zone, char *zone_name);
