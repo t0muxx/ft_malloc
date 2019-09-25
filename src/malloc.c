@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:20:19 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/25 11:29:52 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/09/25 16:13:03 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void *search_chunk(t_chunk *head, size_t sz_aligned)
 
 void *malloc_tiny(size_t size)
 {
+	t_zone *zone_used;
 	size_t sz_aligned;
 	void *zone_base;
 	void *mem;
@@ -67,17 +68,17 @@ void *malloc_tiny(size_t size)
 		if (mem != NULL)
 			return (mem);
 	}
-	if (g_malloc.zone_tiny->used == g_malloc.zone_tiny->size)
-	{
-		// no available memory in my page
-	}
-	zone_base = ZONE2MEM(g_malloc.zone_tiny) + g_malloc.zone_tiny->used;
+	zone_used = search_zone(&(g_malloc.zone_tiny), sz_aligned, SZ_ZONE_TINY);
+	zone_base = zone_2_mem(zone_used) + zone_used->used;
 #ifdef DEBUG
 	printf("|DEBUG| -> Request malloc size : %lu, aligned to %lu\n", size, sz_aligned);
 #endif
 	add_chunk(&(g_malloc.chunk_tiny), zone_base, sz_aligned);
-	g_malloc.zone_tiny->used += sz_aligned + sizeof(t_chunk);
-#ifdef DEBUG
+	zone_used->used += sz_aligned + sizeof(t_chunk);
+#ifdef DEBUG_ZONE
+	printf("|DEBUG| -> current zone used : %lu\n", g_malloc.zone_tiny->used);
+#endif
+#ifdef DEBUG_CHUNK
 	printf("|DEBUG| -> added new chunk g_malloc.zone_tiny->used : %lu\n", g_malloc.zone_tiny->used);
 	printf("|DEBUG| -> addr of the chunk mem : %p\n", (void *)g_malloc.chunk_tiny + sizeof(t_chunk));
 	print_chunks(g_malloc.chunk_tiny, "chunk_tiny");
