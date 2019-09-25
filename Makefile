@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2019/09/25 11:36:15 by tmaraval         ###   ########.fr        #
+#    Updated: 2019/09/25 15:46:39 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,9 @@ INC_PATH =  inc
 SRCS = malloc.c \
 	   init.c \
 	   debug.c \
-	   free.c
+	   free.c \
+	   utils.c \
+	   zone.c
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRCS))
