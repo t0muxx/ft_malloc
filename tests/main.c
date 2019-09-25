@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 16:21:20 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/25 09:18:30 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/09/25 11:39:17 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,21 @@
 
 int main(void)
 {
-	ft_malloc(1);
+	char *str;
+	char *str2;
+
+	str = (char *)ft_malloc(4);
+	printf("str = %p\n", str);
+	strcpy(str, "123");
+	printf("str = %s\n", str);
+	str2 = (char *)ft_malloc(8);
+	printf("str2 = %p\n", str2);
+	strcpy(str2, "abcdefg");
+	printf("str2 = %s\n", str2);
+	ft_free(str2);	
+	str2 = (char *)ft_malloc(8);
+	printf("str2 = %p\n", str2);
+	strcpy(str2, "xzvbnmj");
+	printf("str2 = %s\n", str2);
 	return(0);
 }
