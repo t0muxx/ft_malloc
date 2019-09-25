@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 10:51:30 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/25 11:38:23 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/09/25 15:26:19 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,25 @@ void print_chunks(t_chunk *chunk, char * chunk_name)
 		printf("|DEBUG| -> chunk->dataAddr = %p\n", (void *)tmp + sizeof(t_chunk));
 		printf("|DEBUG| -> chunk->data = %s\n", (void *)tmp + sizeof(t_chunk));
 		printf("--- next -----\n");
+		tmp = tmp->next;
+	}
+}
+
+void print_zones(t_zone *zone, char *zone_name)
+{
+	t_zone *tmp;
+	int i;
+
+	i = 0;
+	tmp = zone;
+	printf("|DEBUG| -> zone in : %s\n", zone_name);
+	while (tmp != NULL)
+	{
+		printf("|DEBUG| -> page num : %d\n", i);
+		printf("|DEBUG| -> zone->size = %lu\n", tmp->size);
+		printf("|DEBUG| -> zone->used = %lu\n", tmp->used);
+		printf("|DEBUG| -> Addr space %p - %p\n", zone_2_mem(tmp), zone_2_mem(tmp) + tmp->size);
+		i++;
 		tmp = tmp->next;
 	}
 }

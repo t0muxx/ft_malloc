@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 16:21:20 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/25 11:39:17 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/09/25 16:01:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,17 @@ int main(void)
 {
 	char *str;
 	char *str2;
+	int i = 0;
 
+	while (i < 100)
+	{
+		ft_malloc(8);
+		i++;
+	}
+	ft_malloc(10);
+	ft_malloc(10);
+	return (0);
+/*
 	str = (char *)ft_malloc(4);
 	printf("str = %p\n", str);
 	strcpy(str, "123");
@@ -34,4 +44,6 @@ int main(void)
 	strcpy(str2, "xzvbnmj");
 	printf("str2 = %s\n", str2);
 	return(0);
+	*/
+
 }

@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 11:30:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/25 15:50:22 by tmaraval         ###   ########.fr       */
+/*   Created: 2019/09/25 14:51:56 by tmaraval          #+#    #+#             */
+/*   Updated: 2019/09/25 14:54:10 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-void ft_free(void *ptr)
+// Take a zone pointer (tiny/medium)
+// And convert it to start of usable memory
+void *zone_2_mem(t_zone *zone)
 {
-	t_chunk *tmp;
-
-#ifdef DEBUG_FREE
-	printf("|DEBUG| -> before free\n");
-	print_chunks(g_malloc.chunk_tiny, "chunk_tiny");
-#endif
-	tmp = ptr - sizeof(t_chunk);
-	tmp->status = FREE;
-#ifdef DEBUG_FREE
-	printf("|DEBUG| -> after free\n");
-	print_chunks(g_malloc.chunk_tiny, "chunk_tiny");
-#endif
+	return ((void *)zone + sizeof(t_zone));
 }
