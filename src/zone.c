@@ -6,11 +6,50 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/27 09:07:52 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/09/27 10:48:05 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
+
+int  zone_need_free(t_zone **zone, size_t size_alloc_min)
+{
+	t_zone *tmp;
+
+	tmp = *zone;
+	while (tmp != NULL)
+	{
+		if (tmp->size - tmp->used < size_alloc_min + sizeof(t_chunk) && tmp->chunks == NULL)
+			return (1);
+	}
+	return (0);
+}
+
+void remove_zone(t_zone **zone, size_t size_alloc_min)
+{
+	t_zone *tmp;
+	t_zone *prev;
+	
+	tmp = *zone;
+	prev = *zone;
+	if (tmp != NULL && tmp->size - tmp->used < size_alloc_min + sizeof(t_chunk) && tmp->chunks == NULL)
+	{
+		*zone = tmp->next;
+		munmap(tmp + tmp->used, tmp->size - tmp->used);
+		munmap(tmp, sizeof(t_zone));
+		return ;
+	}
+	while (tmp != NULL && tmp->size - tmp->used < size_alloc_min + sizeof(t_chunk) && tmp->chunks == NULL)
+	{
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	if (tmp == NULL)
+		return;
+	prev->next = tmp->next;
+	munmap(tmp + tmp->used, tmp->size - tmp->used);
+	munmap(tmp, sizeof(t_zone));
+}
 
 // Search the zone for available memory of size
 // if not, add a new zone, take memory from this
@@ -22,7 +61,7 @@ void  *search_zone(t_zone **zone, size_t size, size_t sz_zone)
 	tmp = *zone;
 	while (tmp != NULL)
 	{
-		if (size < tmp->size - tmp->used)
+		if (size + sizeof(t_chunk) < tmp->size - tmp->used)
 			return (tmp);
 		tmp = tmp->next;
 	}

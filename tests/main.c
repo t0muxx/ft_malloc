@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 16:21:20 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/26 17:00:11 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/09/27 09:23:12 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,11 @@
 
 int main(void)
 {
-	char *str;
-	char *str2;
 	test_free_validChunk();
 //	test_init_ok();
 //	test_init_alreadyInit();
-	
-	str = (char *)ft_malloc(4);
-	printf("str = %p\n", str);
-	strcpy(str, "123");
-	printf("str = %s\n", str);
-	str2 = (char *)ft_malloc(8);
-	printf("str2 = %p\n", str2);
-	strcpy(str2, "abcdefg");
-	printf("str2 = %s\n", str2);
-	ft_free(str2);	
-	str2 = (char *)ft_malloc(8);
-	printf("str2 = %p\n", str2);
-	strcpy(str2, "xzvbnmj");
-	printf("str2 = %s\n", str2);
+	test_malloc_simple();
+	test_malloc_multiple();
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:20:19 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/27 09:09:41 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/09/27 10:35:33 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,46 @@
 #include "libft.h"
 
 t_malloc g_malloc = {NULL, NULL};
+
+int have_free_chunk(t_chunk **head)
+{
+	t_chunk *chunks;
+
+	chunks = *head;
+	while (chunks != NULL)
+	{
+		if (chunks->status == FREE)
+			return (1);
+	}
+	return (0);
+}
+
+void remove_free_chunk(t_chunk **head)
+{
+	t_chunk *chunks;
+	t_chunk *prev;
+
+	chunks = *head;
+	prev = *head;
+	if (chunks != NULL && chunks->status == FREE)
+	{
+#ifdef DEBUG_FREE
+	printf("|DEBUG| -> munmap chunk for size : %lu\n", chunks->size + sizeof(t_chunk));
+#endif
+		*head = chunks->next;
+		munmap(chunks, chunks->size + sizeof(t_chunk));
+		return;
+	}
+	while (chunks != NULL && chunks->status != FREE)
+	{
+		prev = chunks;
+		chunks = chunks->next;
+	}
+	if (chunks == NULL)
+		return;
+	prev->next = chunks->next;
+	munmap(chunks, chunks->size + sizeof(t_chunk));
+}
 
 void add_chunk(t_chunk **head, void *zone_base, size_t sz_aligned)
 {
@@ -86,8 +126,7 @@ void *malloc_tiny(size_t size)
 #endif
 #ifdef DEBUG_CHUNK
 	printf("|DEBUG| -> added new chunk g_malloc.zone_tiny->used : %lu\n", g_malloc.zone_tiny->used);
-	printf("|DEBUG| -> addr of the chunk mem : %p\n", (void *)g_malloc.chunk_tiny + sizeof(t_chunk));
-	print_chunks(g_malloc.chunk_tiny, "chunk_tiny");
+	print_chunks(g_malloc.zone_tiny->chunks, "chunk_tiny");
 #endif
 
 	return ((void *)zone_base + sizeof(t_chunk));
