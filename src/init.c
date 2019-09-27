@@ -6,21 +6,36 @@
 /*   By: t0mux </var/spool/mail/t0mux>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 17:10:11 by t0mux             #+#    #+#             */
-/*   Updated: 2019/09/25 15:53:59 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/09/27 09:05:23 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_malloc.h>
+#include <unistd.h>
 
-int init_malloc(t_malloc *g_malloc)
+int init_malloc()
 {
-	if (g_malloc->zone_tiny == NULL) 
+	int pagesize;
+
+	pagesize = getpagesize();
+	if (g_malloc.zone_tiny == NULL) 
 	{
+	g_malloc.size = malloc(sizeof(t_size));
+		//mmap(0, sizeof(t_size), PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANONYMOUS, -1, 0);
+	if (g_malloc.size == MAP_FAILED)
+	{
+		ft_putendl_fd("malloc : can't mmap memory for g_malloc.size", 2);
+		return (-1);
+	}
+	g_malloc.size->sz_zone_tiny = pagesize * MULTIPLE_ZONE_TINY;
+	g_malloc.size->sz_tiny = ((g_malloc.size->sz_zone_tiny/100)-
+		sizeof(struct s_chunk))+(ALIGN-((g_malloc.size->sz_zone_tiny/100)
+		-sizeof(struct s_chunk))%16);
 #ifdef DEBUG
-	printf("ZONE_TINY = %d\n", SZ_ZONE_TINY);
-	printf("SZ_TINY = %lu\n", SZ_TINY);
+	printf("ZONE_TINY = %lu\n", g_malloc.size->sz_zone_tiny);
+	printf("SZ_TINY = %lu\n", g_malloc.size->sz_tiny);
 #endif
-		if (add_zone(&(g_malloc->zone_tiny), SZ_ZONE_TINY) != 0)
+		if (add_zone(&(g_malloc.zone_tiny), g_malloc.size->sz_zone_tiny) != 0)
 		{
 			ft_putendl_fd("malloc : error during init\n", 2);
 			return (-1);

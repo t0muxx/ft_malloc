@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/25 16:11:16 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/09/27 09:07:52 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int add_zone(t_zone **zone, size_t size)
 	// mmap memory for the new zone
 	mem = mmap(0, sizeof(t_zone) + size, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
 #ifdef DEBUG
-	printf("|DEBUG| -> mmaped zone_tiny : %d\n", SZ_ZONE_TINY);
+	printf("|DEBUG| -> mmaped zone_tiny : %lu\n", g_malloc.size->sz_zone_tiny);
 #endif
 	if (mem == MAP_FAILED) 
 	{
@@ -60,8 +60,8 @@ int add_zone(t_zone **zone, size_t size)
 	new->size = size;
 	new->used = 0;
 	new->next = NULL;
-	new->prev = NULL;
-	ft_memset(zone_2_mem(new), 0, SZ_TINY);
+	new->chunks = NULL;
+	ft_memset(zone_2_mem(new), 0, size);
 	head = *zone;
 	if (*zone == NULL)
 		*zone = new;
