@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/01 08:12:41 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/01 15:22:47 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ t_zone	*search_zone(t_zone **zone, size_t size)
 	tmp = *zone;
 	while (tmp->next != NULL)
 		tmp = tmp->next;
+#ifdef DEBUG_ZONE
 	printf("RET FROM HERE %p\n", tmp);
+#endif
 	return (tmp);
 }
 
