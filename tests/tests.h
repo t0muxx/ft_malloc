@@ -1,7 +1,14 @@
 #include <assert.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <stddef.h>
+#include <setjmp.h>
+#include <stdint.h>
+#include <cmocka.h>
+#include "ft_malloc.h"
 
-void test_free_validChunk(void);
-void test_init_ok(void);
-void test_init_alreadyInit(void);
-void test_malloc_simple(void);
-void test_malloc_multiple(void);
+
+void test_add_zone_after(void **state);
+void test_add_zone_null(void **state);
