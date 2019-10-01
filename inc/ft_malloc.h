@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/01 15:21:36 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/01 15:56:20 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 # define MULTIPLE_ZONE_TINY 16
 # define MULTIPLE_ZONE_MEDIUM 32
 //# define DEBUG 0
-//# define DEBUG_CHUNK 1
+# define DEBUG_CHUNK 1
 //# define DEBUG_ZONE 1
 //#define DEBUG_FREE 1
-//#define DEBUG_PAGE 1
+#define DEBUG_PAGE 1
 # define ALIGN_SIZE(x) (x + ALIGN - (x%ALIGN))
 
 enum			e_status {
@@ -122,4 +122,5 @@ void 	*search_chunk(t_zone *head, size_t sz_aligned);
 //DEBUG : 
 void	print_chunks(t_chunk *chunk, char *chunk_name);
 void	print_zones(t_zone *zone, char *zone_name);
+void	print_chunk(t_chunk *tmp);
 #endif
