@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2019/10/01 15:38:50 by tmaraval         ###   ########.fr        #
+#    Updated: 2019/10/01 21:40:04 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC =		gcc
 CFLAGS =  -g -fsanitize=address
 
 #PATH#
-OBJ_PATH =  obj
+OBJ_PATH =  obj/
 SRC_PATH =  ./
 INC_PATH =  ./
 
@@ -31,7 +31,7 @@ SRCS = main.c \
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRCS))
 
-all: $(NAME)
+all: $(NAME) $(COVERAGE)
 
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) -I$(INC_PATH) $(OBJ) ../libft_malloc.so -lcmocka -o $(NAME)

@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 16:21:20 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/01 15:47:28 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/01 19:36:33 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int main(void)
         cmocka_unit_test(test_search_zone_same),
         cmocka_unit_test(test_search_zone_needAdd),
         cmocka_unit_test(test_page_free_0pageFree),
-        cmocka_unit_test(test_page_free_firstPageToFree),
-        cmocka_unit_test(test_page_free_secondPageToFree),
+        cmocka_unit_test(test_page_free_Page0ToFree),
+        cmocka_unit_test(test_page_free_Page2ToFree),
     };
 
     return cmocka_run_group_tests(tests, NULL, NULL);

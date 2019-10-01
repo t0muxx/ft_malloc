@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2019/10/01 15:38:56 by tmaraval         ###   ########.fr        #
+#    Updated: 2019/10/01 21:40:23 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@+$(MAKE) -C libft/
-	@$(CC) $(CFLAGS) -I$(INC_PATH) $(OBJ) libft/libft.a  -shared -lgcov -o $(NAME)
+	@$(CC) $(CFLAGS) -I$(INC_PATH) $(OBJ) libft/libft.a  -shared -o $(NAME)
 	@/bin/rm -f $(LINK)
 	@ln -s $(NAME) $(LINK)
 

@@ -15,6 +15,6 @@ void test_add_zone_null(void **state);
 void test_search_zone_same(void **state);
 void test_search_zone_needAdd(void **state);
 void test_page_free_0pageFree(void **state);
-void test_page_free_firstPageToFree(void **state);
-void test_page_free_secondPageToFree(void **state);
+void	test_page_free_Page0ToFree(void **state);
+void	test_page_free_Page2ToFree(void **state);
 int  cnt_chunks(t_chunk **head, size_t status);
