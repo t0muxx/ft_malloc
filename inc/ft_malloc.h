@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/01 07:51:40 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/01 10:36:47 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int		add_zone(t_zone **zone, size_t pages_nbr);
 t_zone	*search_zone(t_zone **zone, size_t size);
 int		zone_need_free(t_zone **zone, size_t size_alloc_min);
 void	remove_zone(t_zone **zone, size_t size_alloc_min);
+void	zone_page_free(t_zone **current_zone, size_t pages_nbr);
 
 //Chunks
 int		have_free_chunk(t_chunk **head);
@@ -97,6 +98,7 @@ void	remove_free_chunk(t_chunk **head);
 void	munmap_small_medium(t_zone **zone);
 int		have_free_chunk(t_chunk **head);
 void	add_chunk(t_chunk **head, void *zone_base, size_t sz_aligned);
+void	delete_chunk(t_chunk **head, t_chunk *toDelete);
 void 	*search_chunk(t_zone *head, size_t sz_aligned);
 
 //DEBUG : 

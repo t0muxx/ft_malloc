@@ -6,11 +6,23 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 16:12:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/01 07:52:31 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/01 10:36:04 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
+
+void	delete_chunk(t_chunk **head, t_chunk *toDelete)
+{
+	if (*head == NULL || toDelete == NULL)
+		return ;
+	if (*head == toDelete)
+		*head = toDelete->next;
+	if (toDelete->next != NULL)
+		toDelete->next->prev = toDelete->prev;
+	if (toDelete->prev != NULL)
+		toDelete->prev->next = toDelete->next;
+}
 
 void	add_chunk(t_chunk **head, void *zone_base, size_t sz_aligned)
 {

@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/01 07:59:30 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/01 08:12:41 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@
 t_zone	*search_zone(t_zone **zone, size_t size)
 {
 	t_zone *tmp;
+	size_t pages_nbr;
 
 	tmp = *zone;
+	pages_nbr = tmp->pages_nbr;
 	while (tmp != NULL)
 	{
 		if (size + sizeof(t_chunk) < tmp->size - tmp->used)
@@ -32,7 +34,7 @@ t_zone	*search_zone(t_zone **zone, size_t size)
 #ifdef DEBUG_ZONE
 	printf("|DEBUG| -> need to add new zone !\n");
 #endif
-	if (add_zone(zone, tmp->pages_nbr) != 0)
+	if (add_zone(zone, pages_nbr) != 0)
 	{
 		ft_putendl_fd("malloc : error adding zone !\n", 2);
 		return (NULL);
