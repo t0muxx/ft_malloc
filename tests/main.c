@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 16:21:20 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/30 16:22:11 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/01 09:32:14 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ int main(void)
 	const struct CMUnitTest tests[] = {
         cmocka_unit_test(test_add_zone_null),
         cmocka_unit_test(test_add_zone_after),
+        cmocka_unit_test(test_search_zone_same),
+        cmocka_unit_test(test_search_zone_needAdd),
+        cmocka_unit_test(test_zone_page_free_0pageFree),
+        cmocka_unit_test(test_zone_page_free_firstPageToFree),
     };
 
     return cmocka_run_group_tests(tests, NULL, NULL);
