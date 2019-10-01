@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:20:19 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/27 10:35:33 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/09/30 16:08:08 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,90 +14,6 @@
 #include "libft.h"
 
 t_malloc g_malloc = {NULL, NULL};
-
-int have_free_chunk(t_chunk **head)
-{
-	t_chunk *chunks;
-
-	chunks = *head;
-	while (chunks != NULL)
-	{
-		if (chunks->status == FREE)
-			return (1);
-	}
-	return (0);
-}
-
-void remove_free_chunk(t_chunk **head)
-{
-	t_chunk *chunks;
-	t_chunk *prev;
-
-	chunks = *head;
-	prev = *head;
-	if (chunks != NULL && chunks->status == FREE)
-	{
-#ifdef DEBUG_FREE
-	printf("|DEBUG| -> munmap chunk for size : %lu\n", chunks->size + sizeof(t_chunk));
-#endif
-		*head = chunks->next;
-		munmap(chunks, chunks->size + sizeof(t_chunk));
-		return;
-	}
-	while (chunks != NULL && chunks->status != FREE)
-	{
-		prev = chunks;
-		chunks = chunks->next;
-	}
-	if (chunks == NULL)
-		return;
-	prev->next = chunks->next;
-	munmap(chunks, chunks->size + sizeof(t_chunk));
-}
-
-void add_chunk(t_chunk **head, void *zone_base, size_t sz_aligned)
-{
-	t_chunk *tmp;
-	t_chunk *new;
-
-	new = zone_base;
-	new->status = USED;
-    new->size = sz_aligned;
-	new->prev = NULL;
-	new->next = NULL;
-	tmp = *head;
-	if (*head == NULL)
-		*head = new;
-	else
-	{
-		while (tmp->next != NULL)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
-}
-
-void *search_chunk(t_zone *head, size_t sz_aligned)
-{
-	t_zone *tmp_zone;
-	t_chunk *tmp_chunk;
-
-	tmp_zone = head;
-	while (tmp_zone != NULL)
-	{
-		tmp_chunk = tmp_zone->chunks;
-		while (tmp_chunk != NULL)
-		{
-			if (tmp_chunk->status == FREE && tmp_chunk->size == sz_aligned)
-			{
-				tmp_chunk->status = USED;
-				return ((void *)tmp_chunk + sizeof(t_chunk));
-			}
-			tmp_chunk = tmp_chunk->next;
-		}
-		tmp_zone = tmp_zone->next;
-	}
-	return (NULL);
-}
 
 void *malloc_tiny(size_t size)
 {
@@ -114,7 +30,7 @@ void *malloc_tiny(size_t size)
 		if (mem != NULL)
 			return (mem);
 	}
-	zone_used = search_zone(&(g_malloc.zone_tiny), sz_aligned, g_malloc.size->sz_zone_tiny);
+	zone_used = search_zone(&(g_malloc.zone_tiny), sz_aligned);
 	zone_base = zone_2_mem(zone_used) + zone_used->used;
 #ifdef DEBUG
 	printf("|DEBUG| -> Request malloc size : %lu, aligned to %lu\n", size, sz_aligned);
@@ -128,7 +44,8 @@ void *malloc_tiny(size_t size)
 	printf("|DEBUG| -> added new chunk g_malloc.zone_tiny->used : %lu\n", g_malloc.zone_tiny->used);
 	print_chunks(g_malloc.zone_tiny->chunks, "chunk_tiny");
 #endif
-
+	printf("############################### -> |%p|\n", (void *)zone_base + sizeof(t_chunk));
+	printf("############################### -> ALIGNED ? : |%d|\n", ((long)(void *)zone_base + sizeof(t_chunk))%16 == 0);
 	return ((void *)zone_base + sizeof(t_chunk));
 }
 
