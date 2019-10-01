@@ -6,16 +6,19 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/30 16:07:41 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/01 07:59:30 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-// Search the zone for available memory of size
-// if not, add a new zone, take memory from this
-// new zone and return it
-t_zone  *search_zone(t_zone **zone, size_t size)
+/*
+** Search the zone for available memory of size
+** if not, add a new zone, take memory from this
+** new zone and return it
+*/
+
+t_zone	*search_zone(t_zone **zone, size_t size)
 {
 	t_zone *tmp;
 
@@ -42,15 +45,15 @@ t_zone  *search_zone(t_zone **zone, size_t size)
 }
 
 /*
- * Add new zone, the 0x1000 here is for the t_zone struct
- *
- */
-int add_zone(t_zone **zone, size_t pages_nbr)
+** Add new zone, the 0x1000 here is for the t_zone struct
+*/
+
+int		add_zone(t_zone **zone, size_t pages_nbr)
 {
 	t_zone *head;
 	t_zone *new;
-	void *mem;
-	size_t size;
+	void 	*mem;
+	size_t 	size;
 
 	size = 0x1000 * pages_nbr;
 	// mmap memory for the new zone

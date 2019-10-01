@@ -6,27 +6,27 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 16:12:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/30 14:42:39 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/01 07:52:31 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-void add_chunk(t_chunk **head, void *zone_base, size_t sz_aligned)
+void	add_chunk(t_chunk **head, void *zone_base, size_t sz_aligned)
 {
 	t_chunk *tmp;
 	t_chunk *new;
 
 	new = zone_base;
 	new->status = USED;
-    new->size = sz_aligned;
+	new->size = sz_aligned;
 	new->prev = NULL;
 	new->next = NULL;
 	tmp = *head;
 	if (*head == NULL)
 	{
 		*head = new;
-		return;
+		return ;
 	}
 	while (tmp->next != NULL)
 		tmp = tmp->next;
@@ -34,9 +34,9 @@ void add_chunk(t_chunk **head, void *zone_base, size_t sz_aligned)
 	new->prev = tmp;
 }
 
-void *search_chunk(t_zone *head, size_t sz_aligned)
+void	*search_chunk(t_zone *head, size_t sz_aligned)
 {
-	t_zone *tmp_zone;
+	t_zone	*tmp_zone;
 	t_chunk *tmp_chunk;
 
 	tmp_zone = head;
