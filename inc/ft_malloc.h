@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/30 16:07:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/01 07:49:59 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,23 @@
 # define ALIGN 16
 # define MULTIPLE_ZONE_TINY 16
 # define MULTIPLE_ZONE_MEDIUM 32
-//#define SZ_MEDIUM ((SZ_ZONE_MEDIUM/100)-sizeof(struct s_chunk))+(ALIGN-((SZ_ZONE_MEDIUM/100)-sizeof(struct s_chunk))%16)
-
 # define DEBUG 1
 //# define DEBUG_CHUNK 1
 # define DEBUG_ZONE 1
 //#define DEBUG_FREE 1
-// Check norm
 # define ALIGN_SIZE(x) (x + ALIGN - (x%ALIGN))
 
-enum e_status {
+enum			e_status {
 	USED,
 	FREE
 };
 
-// s_chunk->prev used for alignment
-
 typedef struct	s_chunk
 {
-	size_t status;
-	size_t size;
-	struct s_chunk *prev;
-	struct s_chunk *next;
+	size_t			status;
+	size_t			size;
+	struct s_chunk	*prev;
+	struct s_chunk	*next;
 
 }				t_chunk;
 
@@ -61,12 +56,12 @@ typedef struct	s_zone
 
 typedef struct	s_size
 {
-	size_t  sz_zone_tiny;
-	size_t  sz_min_alloc_tiny;
-	size_t  sz_zone_medium;
-	size_t  sz_min_alloc_medium;
-	size_t	sz_tiny;
-	size_t  sz_medium;
+	size_t sz_zone_tiny;
+	size_t sz_min_alloc_tiny;
+	size_t sz_zone_medium;
+	size_t sz_min_alloc_medium;
+	size_t sz_tiny;
+	size_t sz_medium;
 
 }				t_size;
 
@@ -79,7 +74,9 @@ typedef struct	s_malloc
 
 extern t_malloc g_malloc;
 
-/* Front fucntion */
+/*
+** Front fucntion 
+*/
 void	*ft_malloc(size_t size);
 void	ft_free(void *ptr);
 
@@ -100,9 +97,9 @@ void	remove_free_chunk(t_chunk **head);
 void	munmap_small_medium(t_zone **zone);
 int		have_free_chunk(t_chunk **head);
 void	add_chunk(t_chunk **head, void *zone_base, size_t sz_aligned);
-void *search_chunk(t_zone *head, size_t sz_aligned);
+void 	*search_chunk(t_zone *head, size_t sz_aligned);
 
 //DEBUG : 
-void	print_chunks(t_chunk *chunk, char * chunk_name);
+void	print_chunks(t_chunk *chunk, char *chunk_name);
 void	print_zones(t_zone *zone, char *zone_name);
 #endif
