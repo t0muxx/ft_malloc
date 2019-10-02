@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2019/10/01 21:40:04 by tmaraval         ###   ########.fr        #
+#    Updated: 2019/10/02 14:59:24 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 NAME =			unit_tests.bin
 
 #FLAG AND COMPILATOR#
-CC =		gcc
+CC =		clang
 CFLAGS =  -g -fsanitize=address
 
 #PATH#
@@ -26,6 +26,7 @@ SRCS = main.c \
 	   test_zone.c \
 	   test_free.c \
 	   test_page.c \
+	   test_malloc.c \
 	   utils.c
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
