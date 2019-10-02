@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/01 15:56:20 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/02 07:52:14 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int		page_free_check_chunk_state_for_page(t_chunk **chunk, void *base, int p);
 void	page_free_check_chunk(t_zone **current_zone, t_chunk **chunk,
 								void *base, int p);
 void	page_free(t_zone **current_zone, size_t pages_nbr);
-t_chunk *page_free_find_chunk_left_border(t_chunk **chunk, void *base, int p);
+t_chunk *page_free_find_chunk_left_border(t_chunk *chunk, void *base, int p);
 
 /* 
 ** CHUNKS :  
