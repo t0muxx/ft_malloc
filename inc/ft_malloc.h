@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/02 10:33:56 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/02 14:54:16 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 # define MULTIPLE_ZONE_TINY 16
 # define MULTIPLE_ZONE_MEDIUM 32
 //# define DEBUG 0
-# define DEBUG_CHUNK 1
+//# define DEBUG_CHUNK 1
 //# define DEBUG_ZONE 1
-//#define DEBUG_FREE 1
-#define DEBUG_PAGE 1
+//# define DEBUG_FREE 1
+//# define DEBUG_PAGE 1
 # define ALIGN_SIZE(x) (x + ALIGN - (x%ALIGN))
 
 enum			e_status {
@@ -55,17 +55,6 @@ typedef struct	s_zone
 
 }				t_zone;
 
-typedef struct	s_size
-{
-	size_t sz_zone_tiny;
-	size_t sz_min_alloc_tiny;
-	size_t sz_zone_medium;
-	size_t sz_min_alloc_medium;
-	size_t sz_tiny;
-	size_t sz_medium;
-
-}				t_size;
-
 typedef struct	s_malloc
 {
 	t_zone			*zone_tiny;
@@ -73,7 +62,7 @@ typedef struct	s_malloc
 
 }				t_malloc;
 
-extern t_malloc g_malloc;
+t_malloc g_malloc_state;
 
 /*
 ** Front fucntion 
@@ -119,6 +108,8 @@ int		have_free_chunk(t_chunk **head);
 void	add_chunk(t_chunk **head, void *zone_base, size_t sz_aligned);
 void	delete_chunk(t_chunk **head, t_chunk *toDelete);
 void 	*search_chunk(t_zone *head, size_t sz_aligned);
+
+size_t	size_max(size_t multiple);
 
 //DEBUG : 
 void	print_chunks(t_chunk *chunk, char *chunk_name);

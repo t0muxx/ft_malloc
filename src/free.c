@@ -6,12 +6,11 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 11:30:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/02 10:34:35 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/02 14:19:42 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
-
 
 void munmap_small_medium(t_zone **zones)
 {
@@ -33,17 +32,17 @@ void ft_free(void *ptr)
 
 #ifdef DEBUG_FREE
 	printf("|DEBUG| -> before free\n");
-	print_chunks(g_malloc.chunk_tiny, "chunk_tiny");
+	print_chunks(g_malloc_state.zone_tiny->chunks, "chunk_tiny");
 #endif
 	chunk = ptr - sizeof(t_chunk);
-	if (chunk->size < g_malloc.size->sz_tiny)
+	if (chunk->size < size_max(MULTIPLE_ZONE_TINY))
 	{
 		chunk->status = FREE;
-		munmap_small_medium(&(g_malloc.zone_tiny));
+		munmap_small_medium(&(g_malloc_state.zone_tiny));
 			
 	}
 #ifdef DEBUG_FREE
 	printf("|DEBUG| -> after free\n");
-	print_chunks(g_malloc.chunk_tiny, "chunk_tiny");
+	print_chunks(g_malloc_state.zone_tiny->chunks, "chunk_tiny");
 #endif
 }
