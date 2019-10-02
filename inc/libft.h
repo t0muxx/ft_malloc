@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 10:36:27 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/24 16:37:55 by t0mux            ###   ########.fr       */
+/*   Updated: 2019/10/02 18:31:21 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <time.h>
-# include "ft_printf.h"
+# include "ft_printf/ft_printf.h"
 
 # define ANSI_COLOR_RED     "\x1b[31m"
 # define ANSI_COLOR_GREEN   "\x1b[32m"
@@ -120,6 +120,7 @@ int					ft_str_is_lowercase(const char *s);
 int					ft_str_isalnum(const char *s);
 char				*ft_strrev(char *str);
 char				*ft_itoa_base(int nb, int base);
+void				ft_ltoa_base(long nb, char *buffer, int base);
 size_t				ft_2darraylen(char **tab);
 char				**ft_split_whitespace(const char *str);
 void				ft_lst_free(t_list *list);
