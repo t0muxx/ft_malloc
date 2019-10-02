@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2019/10/02 15:02:13 by tmaraval         ###   ########.fr        #
+#    Updated: 2019/10/02 15:10:29 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LINK =			libft_malloc.so
 
 #FLAG AND COMPILATOR#
 CC =		clang
-CFLAGS =  -g -Wall -Werror -Wextra -fPIC -fsanitize=address
+CFLAGS =  -g -Wall -Werror -Wextra -fPIC
 
 #PATH#
 OBJ_PATH =  obj

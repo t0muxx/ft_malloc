@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/02 14:54:16 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/02 15:24:12 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # define MULTIPLE_ZONE_TINY 16
 # define MULTIPLE_ZONE_MEDIUM 32
 //# define DEBUG 0
-//# define DEBUG_CHUNK 1
-//# define DEBUG_ZONE 1
+# define DEBUG_CHUNK 1
+# define DEBUG_ZONE 1
 //# define DEBUG_FREE 1
 //# define DEBUG_PAGE 1
 # define ALIGN_SIZE(x) (x + ALIGN - (x%ALIGN))
@@ -58,7 +58,7 @@ typedef struct	s_zone
 typedef struct	s_malloc
 {
 	t_zone			*zone_tiny;
-	struct s_size	*size;
+	t_zone			*zone_medium;
 
 }				t_malloc;
 

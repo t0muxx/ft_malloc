@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:20:19 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/02 14:56:11 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/02 15:09:41 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ void *ft_malloc(size_t size)
 		return (NULL);
 	}
 	if (size < size_max(MULTIPLE_ZONE_TINY))
+	{
+		return(malloc_tiny(size));
+	}
+	if (size < size_max(MULTIPLE_ZONE_MEDIUM))
 	{
 		return(malloc_tiny(size));
 	}
