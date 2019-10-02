@@ -6,11 +6,24 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 14:51:56 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/09/27 15:56:52 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/02 10:33:43 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
+
+int cnt_zone(t_zone *zone)
+{
+	int i;
+
+	i = 0;
+	while (zone)
+	{
+		i++;
+		zone = zone->next;
+	}
+	return (i);
+}
 
 // Take a zone pointer (tiny/medium)
 // And convert it to start of usable memory

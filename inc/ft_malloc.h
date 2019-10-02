@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/02 07:52:14 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/02 10:33:56 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int		add_zone(t_zone **zone, size_t pages_nbr);
 t_zone	*search_zone(t_zone **zone, size_t size);
 int		zone_need_free(t_zone **zone, size_t size_alloc_min);
 void	remove_zone(t_zone **zone, size_t size_alloc_min);
+int cnt_zone(t_zone *zone);
 
 /*
 ** PAGE :
