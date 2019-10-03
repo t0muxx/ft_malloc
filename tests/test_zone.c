@@ -6,12 +6,51 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 14:09:07 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/01 08:09:28 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:28:46 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 #include "tests.h"
+
+void	test_delete_zone(void **state)
+{
+	t_zone *zone;
+	
+	add_zone(&zone, 16);
+	add_zone(&zone, 16);
+	add_zone(&zone, 16);
+	assert_int_equal(cnt_zone(zone), 3);
+	delete_zone(&zone, &(zone->next));
+	assert_int_equal(cnt_zone(zone), 2);
+	delete_zone(&zone, &zone);
+	assert_int_equal(cnt_zone(zone), 1);
+	delete_zone(&zone, &zone);
+	assert_int_equal(cnt_zone(zone), 0);
+}
+
+void	test_should_delete_zone(void **state)
+{
+	t_zone *zone;
+	int i;
+
+	i = 0;
+	zone = NULL;
+	add_zone(&zone, 16);
+	add_zone(&zone, 16);
+	add_zone(&zone, 16);
+	while (i < 16)
+	{
+		zone->state[i] = FREE;
+		i++;
+	}
+	zone->next->next->state[2] = FREE;
+	zone->next->next->state[5] = FREE;
+	zone->next->next->state[8] = FREE;
+	assert_int_equal(should_delete_zone(zone), 1);
+	assert_int_equal(should_delete_zone(zone->next), 0);
+	assert_int_equal(should_delete_zone(zone->next->next), 0);
+}
 
 void test_search_zone_needAdd(void **state)
 {
