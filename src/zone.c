@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/03 08:35:46 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/03 13:14:11 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,19 @@ t_zone	*search_zone(t_zone **zone, size_t size)
 
 int		add_zone(t_zone **zone, size_t pages_nbr)
 {
-	t_zone *head;
-	t_zone *new;
-//	void 	*mem;
-	size_t 	size;
+	t_zone	*head;
+	t_zone	*new;
+	size_t	size;
 
 	new = NULL;
 	size = 0x1000 * pages_nbr;
-	// mmap memory for the new zone
-	new = mmap(0, size + 0x1000, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
-	if (new == MAP_FAILED) 
+	new = mmap(0, size + 0x1000,
+			PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+	if (new == MAP_FAILED)
 	{
 		ft_putendl_fd("malloc : can't mmap memory for zone_tiny", 2);
 		return (-1);
 	}
-//	new = (t_zone *)mem;
 	ft_memset(new, 0, size + 0x1000);
 	new->size = size;
 	new->used = 0;

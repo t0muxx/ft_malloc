@@ -6,13 +6,13 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 11:30:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/03 08:45:27 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/03 12:59:08 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-void munmap_small_medium(t_zone **zones)
+void	munmap_small_medium(t_zone **zones)
 {
 	t_zone *zone;
 
@@ -21,12 +21,12 @@ void munmap_small_medium(t_zone **zones)
 		return ;
 	while (zone != NULL)
 	{
-		page_free(&zone, zone->pages_nbr);	
+		page_free(&zone, zone->pages_nbr);
 		zone = zone->next;
 	}
 }
 
-void ft_free(void *ptr)
+void	ft_free(void *ptr)
 {
 	t_chunk *chunk;
 
@@ -39,7 +39,6 @@ void ft_free(void *ptr)
 	{
 		chunk->status = FREE;
 		munmap_small_medium(&(g_malloc_state.zone_tiny));
-			
 	}
 #ifdef DEBUG_FREE
 	ft_putendl("|DEBUG| -> after free");

@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 07:53:33 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/02 15:12:19 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/03 12:59:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@ int	init_malloc(void)
 {
 	if (g_malloc_state.zone_tiny == NULL)
 	{
-#ifdef DEBUG
-//		printf("ZONE_TINY = %u\n", getpagesize() * MULTIPLE_ZONE_TINY);
-//		printf("SZ_TINY = %lu\n", size_max(MULTIPLE_ZONE_TINY));
-#endif
 		if (add_zone(&(g_malloc_state.zone_tiny), MULTIPLE_ZONE_TINY) != 0)
 		{
 			ft_putendl_fd("malloc : error during init\n", 2);
