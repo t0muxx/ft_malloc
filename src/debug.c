@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 10:51:30 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/03 12:55:46 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:39:09 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,14 @@ void	print_zones(t_zone *zone, char *zone_name)
 	ft_putendl(zone_name);
 	while (tmp != NULL)
 	{
-		ft_putstr("|DEBUG| -> page num : ");
+		ft_putstr("|DEBUG| -> zone num : ");
 		ft_putnbr(i);
+		ft_putendl("");
+		ft_putstr("|DEBUG| -> zone : ");
+		ft_putptr(tmp);
+		ft_putendl("");
+		ft_putstr("|DEBUG| -> zone->next : ");
+		ft_putptr(tmp->next);
 		ft_putendl("");
 		ft_putstr("|DEBUG| -> zone->size : ");
 		ft_putnbr(zone->size);
@@ -92,8 +98,9 @@ void	print_zones(t_zone *zone, char *zone_name)
 		ft_putptr(zone_2_mem(tmp));
 		ft_putstr(" - ");
 		ft_putptr(zone_2_mem(tmp) + tmp->size);
-		ft_putendl("");
+		ft_putendl("\n----------------- NEXT ->");
 		i++;
 		tmp = tmp->next;
 	}
+	ft_putendl("---------------- END -----");
 }

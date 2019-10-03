@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:20:19 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/03 13:01:28 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:00:59 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@ void	*malloc_not_large(t_zone **zone, size_t size)
 	void	*zone_base;
 	void	*mem;
 
-	ft_putstr_fd("asked for malloc(", 2);
-	ft_putnbr(size);
-	ft_putstr(");\n");
 	sz_aligned = ALIGN_SIZE(size);
 	if ((*zone)->chunks != NULL)
 	{
@@ -48,11 +45,18 @@ void	*malloc_not_large(t_zone **zone, size_t size)
 
 void	*ft_malloc(size_t size)
 {
+#ifdef DEBUG
+	ft_putstr("|DEBUG| -> asked for malloc(");
+	ft_putnbr(size);
+	ft_putstr(");\n");
+#endif
 	if ((int)size < 0)
 	{
 		return (NULL);
 	}
-	if (init_malloc() != 0)
+	if (g_malloc_state.zone_tiny == NULL
+			&& g_malloc_state.zone_medium == NULL
+			&& init_malloc() != 0)
 	{
 		return (NULL);
 	}

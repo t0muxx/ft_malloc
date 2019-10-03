@@ -6,11 +6,50 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/03 13:14:11 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:46:34 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
+
+int		should_delete_zone(t_zone *zone)
+{
+	int i;
+
+	i = 0;
+	while (i < zone->pages_nbr)
+	{
+		if (zone->state[i] == USED)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	delete_zone(t_zone **zone, t_zone **del)
+{
+	t_zone *tmp;
+
+	tmp = *zone;
+#ifdef DEBUG_ZONE
+	ft_putstr("|DEBUG| -> deleting zone : ");
+	ft_putptr(*del);
+	ft_putendl("");
+#endif
+	if (*zone == NULL || *del == NULL)
+		return ;
+	if ((*del)->next == NULL)
+	{
+		*zone = NULL;
+		return ;
+	}
+	if (*zone == *del)
+		*zone = (*del)->next;
+	while (tmp->next && tmp->next != (*del))
+		tmp = tmp->next;
+	tmp->next = (*del)->next;
+	munmap((*del), getpagesize());
+}
 
 /*
 ** Search the zone for available memory of size
