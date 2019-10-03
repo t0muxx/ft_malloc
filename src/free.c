@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 11:30:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/02 14:19:42 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/03 08:45:27 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void ft_free(void *ptr)
 	t_chunk *chunk;
 
 #ifdef DEBUG_FREE
-	printf("|DEBUG| -> before free\n");
+	ft_putendl("|DEBUG| -> before free");
 	print_chunks(g_malloc_state.zone_tiny->chunks, "chunk_tiny");
 #endif
 	chunk = ptr - sizeof(t_chunk);
@@ -42,7 +42,7 @@ void ft_free(void *ptr)
 			
 	}
 #ifdef DEBUG_FREE
-	printf("|DEBUG| -> after free\n");
+	ft_putendl("|DEBUG| -> after free");
 	print_chunks(g_malloc_state.zone_tiny->chunks, "chunk_tiny");
 #endif
 }

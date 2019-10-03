@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 15:07:40 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/02 13:16:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/03 08:45:00 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void page_free_remove_chunks(t_chunk **head, t_chunk *right_border, t_chunk *lef
 	while (chunk != left_border)
 	{
 #ifdef DEBUG_PAGE
-		printf("removed chunk\n");
+		ft_putstr("removed chunk\n");
 		print_chunk(chunk);
 #endif
 		tmp = chunk->prev;
@@ -61,7 +61,7 @@ void page_free_remove_chunks(t_chunk **head, t_chunk *right_border, t_chunk *lef
 	if (chunk != NULL && chunk->status == FREE)
 	{
 #ifdef DEBUG_PAGE
-		printf("removed chunk\n");
+		ft_putstr("removed chunk\n");
 		print_chunk(chunk);
 #endif
 		delete_chunk(head, chunk);
@@ -101,28 +101,40 @@ void page_free_check_chunk(t_zone **current_zone, t_chunk **chunk,
 
 	*chunk = (*current_zone)->chunks;
 #ifdef DEBUG_PAGE	
-	printf("page = %d\n", p);
+	ft_putstr("page = ");
+	ft_putnbr(p);
+	ft_putendl("");
 #endif
 	if ((*current_zone)->state[p] != FREE)
 	{
 		right_border = page_free_find_chunk_right_border(*chunk, base, p);
 		if (!((void *)right_border < base + (getpagesize() * (p))))
 		{
-#ifdef DEBUG_PAGE	
-			printf("right_border: %p\n", right_border);
+#ifdef DEBUG_PAGE
+			ft_putstr("right_border : ");
+			ft_putptr(right_border);
+			ft_putendl("");
 #endif
 			left_border = page_free_find_chunk_left_border(right_border, base, p);
 #ifdef DEBUG_PAGE	
-			printf("left_border: %p\n", left_border);
+			ft_putstr("left_border : ");
+			ft_putptr(right_border);
+			ft_putendl("");
 #endif
 			if (page_free_shall_remove_page(right_border, left_border, base, p) == 1)
 			{
-				printf("shall remove page : %d\n", p);
+#ifdef DEBUG_PAGE
+				ft_putstr("shall remove page : ");
+				ft_putnbr(p);
+				ft_putendl("");
+#endif
 				page_free_remove_chunks(&((*current_zone)->chunks), right_border, left_border);
 				(*current_zone)->state[p] = FREE;
 				munmap(base + getpagesize() * p, getpagesize());
 #ifdef DEBUG_PAGE
-				printf("munmaped page num : %d\n", p);
+				ft_putstr("munmaped page num : ");
+				ft_putnbr(p);
+				ft_putendl("");
 				print_chunks((*current_zone)->chunks, "############## AFTER REMOVE ########");
 #endif
 			}

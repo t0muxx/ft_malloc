@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:20:19 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/02 15:37:31 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/03 08:42:00 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,16 @@ void *malloc_not_large(t_zone **zone, size_t size)
 	zone_used = search_zone(&((*zone)), sz_aligned);
 	zone_base = zone_2_mem(zone_used) + zone_used->used;
 #ifdef DEBUG
-	printf("|DEBUG| -> Request malloc size : %lu, aligned to %lu\n", size, sz_aligned);
+	ft_putstr("|DEBUG| -> Request malloc size : ");
+	ft_putnbr(size);
+	ft_putstr(", aligned to ");
+	ft_putnbr(sz_aligned);
+	ft_putendl("");	
 #endif
 	add_chunk(&(zone_used->chunks), zone_base, sz_aligned);
 	zone_used->used += sz_aligned + sizeof(t_chunk);
-#ifdef DEBUG_ZONE
-	printf("|DEBUG| -> current zone used : %lu\n", (*zone)->used);
-#endif
 #ifdef DEBUG_CHUNK
-	printf("|DEBUG| -> added new chunk (*zone)->used : %lu\n", g_malloc_state.zone_tiny->used);
 	print_chunks((*zone)->chunks, "chunk_tiny");
-	printf("############################### -> |%p|\n", (void *)zone_base + sizeof(t_chunk));
-	printf("############################### -> ALIGNED ? : |%d|\n", ((long)(void *)zone_base + sizeof(t_chunk))%16 == 0);
 #endif
 	return ((void *)zone_base + sizeof(t_chunk));
 }

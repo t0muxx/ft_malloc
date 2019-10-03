@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/02 14:48:36 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/03 08:35:46 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_zone	*search_zone(t_zone **zone, size_t size)
 		tmp = tmp->next;
 	}
 #ifdef DEBUG_ZONE
-	printf("|DEBUG| -> need to add new zone !\n");
+	ft_putendl("|DEBUG| -> need to add new zone !");
 #endif
 	if (add_zone(zone, pages_nbr) != 0)
 	{
@@ -42,9 +42,6 @@ t_zone	*search_zone(t_zone **zone, size_t size)
 	tmp = *zone;
 	while (tmp->next != NULL)
 		tmp = tmp->next;
-#ifdef DEBUG_ZONE
-	printf("RET FROM HERE %p\n", tmp);
-#endif
 	return (tmp);
 }
 
