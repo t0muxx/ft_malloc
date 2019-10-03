@@ -20,12 +20,12 @@ LINK =			libft_malloc.so
 
 #FLAG AND COMPILATOR#
 CC =		clang
-CFLAGS =  -g -Wall -Werror -Wextra -fPIC
+CFLAGS =  -g -Wall -Werror -Wextra -fPIC 
 
 #PATH#
 OBJ_PATH =  obj
 SRC_PATH =  src
-INC_PATH =  inc
+INC_PATH :=  inc
 
 SRCS = malloc.c \
 	   init.c \
