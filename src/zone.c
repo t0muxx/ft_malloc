@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/03 18:46:34 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/03 21:34:35 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	delete_zone(t_zone **zone, t_zone **del)
 	while (tmp->next && tmp->next != (*del))
 		tmp = tmp->next;
 	tmp->next = (*del)->next;
-	munmap((*del), getpagesize());
+	// Segfault when i munmap /
+	//	munmap((*del), getpagesize());
 }
 
 /*
