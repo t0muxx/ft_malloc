@@ -6,12 +6,31 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 16:08:55 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/02 13:07:51 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/03 08:56:29 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
 #include "ft_malloc.h"
+
+void test_malloc_multiple(void **state)
+{
+	int value[] = {392, 31, 86, 23, 17, 19, 14, 17, 54,
+		11, 15, 41, 32, 13, 23, 17, 28, 14, 29, 151, 31,
+		15, 17, 21, 15, 21, 8, 41, 41, 20, 11, 14, 20, 23,
+		 19, 27, 11, 8, 32, 0};
+	int i;
+	void *ptr;
+
+	i = 0;
+	while (value[i] != 0)
+	{
+		ptr = ft_malloc(value[i]);
+		assert_non_null(ptr);
+		ptr = NULL;
+		i++;
+	}
+}
 
 void test_malloc_simple(void **state)
 {
