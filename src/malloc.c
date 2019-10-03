@@ -19,7 +19,7 @@ void	*malloc_not_large(t_zone **zone, size_t size)
 	void	*zone_base;
 	void	*mem;
 
-	ft_putstr("asked for malloc(");
+	ft_putstr_fd("asked for malloc(", 2);
 	ft_putnbr(size);
 	ft_putstr(");\n");
 	sz_aligned = ALIGN_SIZE(size);

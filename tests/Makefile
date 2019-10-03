@@ -20,7 +20,12 @@ CFLAGS =  -g -fsanitize=address
 #PATH#
 OBJ_PATH =  obj/
 SRC_PATH =  ./
-INC_PATH =  ./
+
+ifeq ($(HOSTTYPE),"x86_64_Darwin")
+	INC_PATH := ./ -I/Users/tmaraval/.brew/include
+else
+	INC_PATH :=  ./
+endif
 
 SRCS = main.c \
 	   test_zone.c \
@@ -35,11 +40,12 @@ SRC = $(addprefix $(SRC_PATH)/,$(SRCS))
 all: $(NAME) $(COVERAGE)
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) -I$(INC_PATH) $(OBJ) ../libft_malloc.so -lcmocka -o $(NAME)
+	@$(CC) $(CFLAGS) -I$(INC_PATH) $(OBJ) ../libft_malloc.so -L/Users/tmaraval/.brew/lib -lcmocka -o $(NAME)
+	cp ../libft_malloc_x86_64_Darwin.so .
 
 $(OBJ): $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) -o $@ $(CFLAGS) -I$(INC_PATH) -I../inc/ -c $<
+	@$(CC) -o $@ $(CFLAGS) -I$(INC_PATH) -I../inc/ -I/Users/tmaraval/.brew/include -c $<
 
 clean:
 	/bin/rm -rf $(OBJ_PATH)
