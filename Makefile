@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2019/10/02 15:10:29 by tmaraval         ###   ########.fr        #
+#    Updated: 2019/10/03 17:23:58 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,17 +43,17 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@+$(MAKE) -C libft/
-	@$(CC) $(CFLAGS) -I$(INC_PATH) $(OBJ) libft/libft.a  -shared -o $(NAME)
-	@/bin/rm -f $(LINK)
-	@ln -s $(NAME) $(LINK)
+	$(CC) $(CFLAGS) -I$(INC_PATH) $(OBJ) libft/libft.a  -shared -o $(NAME)
+	/bin/rm -f $(LINK)
+	ln -s $(NAME) $(LINK)
 
 $(OBJ): $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
-	@mkdir -p $(dir $@)
-	@$(CC) -o $@ $(CFLAGS) -I$(INC_PATH) -c $<
+	mkdir -p $(dir $@)
+	$(CC) -o $@ $(CFLAGS) -I$(INC_PATH) -c $<
 
 clean:
 	/bin/rm -rf $(OBJ_PATH)
-	@(cd libft ; make clean)
+	(cd libft ; make clean)
 
 fclean: clean
 	/bin/rm -f $(NAME)
