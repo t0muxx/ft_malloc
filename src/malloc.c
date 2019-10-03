@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:20:19 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/03 08:42:00 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/03 09:06:14 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,15 @@ void *ft_malloc(size_t size)
 
 void *malloc(size_t size)
 {
-	return (ft_malloc(size));
+	void *ptr;
+
+	ptr = ft_malloc(size);
+#ifdef DEBUG
+	ft_putstr("ret from malloc : ");
+	ft_putptr(ptr);
+	ft_putendl("");
+#endif
+	return (ptr);
 }
 
 void free(void *ptr)
