@@ -3,3 +3,4 @@ a.out
 *.so
 obj/
 *.bin
+*.swp
