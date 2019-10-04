@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 15:24:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/02 06:40:25 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/04 17:31:57 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	test_page_free_Page16ToFree(void **state)
 	add_chunk(&(zone->chunks), zone_2_mem(zone) + zone->used, 4064);
 	zone->chunks->next->next->next->next->next->next->next->next->next->next->next->next->next->next->status = FREE;
 	zone->chunks->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->status = FREE;
-	print_chunk(zone->chunks);
 	zone->used += 4064 + sizeof(t_chunk);
 	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 14);
 	page_free(&zone, zone->pages_nbr);
