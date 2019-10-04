@@ -29,7 +29,9 @@ int		should_delete_zone(t_zone *zone)
 void	delete_zone(t_zone **zone, t_zone **del)
 {
 	t_zone *tmp;
+	t_zone *cpy;
 
+	cpy = *del;
 	tmp = *zone;
 #ifdef DEBUG_ZONE
 	ft_putstr("|DEBUG| -> deleting zone : ");
@@ -44,12 +46,15 @@ void	delete_zone(t_zone **zone, t_zone **del)
 		return ;
 	}
 	if (*zone == *del)
+	{
 		*zone = (*del)->next;
+		munmap(cpy, getpagesize());
+		return ;
+	}
 	while (tmp->next && tmp->next != (*del))
 		tmp = tmp->next;
 	tmp->next = (*del)->next;
-	// Segfault when i munmap /
-	//	munmap((*del), getpagesize());
+	munmap(cpy, getpagesize());
 }
 
 /*
