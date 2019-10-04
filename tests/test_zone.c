@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 14:09:07 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/03 18:28:46 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/04 14:48:45 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	test_delete_zone(void **state)
 	add_zone(&zone, 16);
 	add_zone(&zone, 16);
 	assert_int_equal(cnt_zone(zone), 3);
-	delete_zone(&zone, &(zone->next));
+	delete_zone(&zone, &(zone->next), getpagesize());
 	assert_int_equal(cnt_zone(zone), 2);
-	delete_zone(&zone, &zone);
+	delete_zone(&zone, &zone, getpagesize());
 	assert_int_equal(cnt_zone(zone), 1);
-	delete_zone(&zone, &zone);
+	delete_zone(&zone, &zone, getpagesize());
 	assert_int_equal(cnt_zone(zone), 0);
 }
 
@@ -81,6 +81,20 @@ void test_search_zone_same(void **state)
 	assert_int_equal(zone->size, 4096*16);
 	assert_int_equal(zone->used, 0);
 	assert_ptr_equal(search_zone(&zone, 32), zone);
+}
+
+void	test_add_zone_large(void **state)
+{
+	t_zone *zone;
+
+	zone = NULL;
+	add_zone_large(&zone, 4096);
+	add_zone_large(&zone, 8096);
+	add_zone_large(&zone, 16096);
+	assert_int_equal(cnt_zone(zone), 3);
+	assert_int_equal(zone->size, 4096);
+	assert_int_equal(zone->next->size, 8096);
+	assert_int_equal(zone->next->next->size, 16096);
 }
 
 void test_add_zone_after(void **state)

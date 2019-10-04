@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2019/10/03 17:10:21 by tmaraval         ###   ########.fr        #
+#    Updated: 2019/10/04 14:50:01 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ CC =		clang
 CFLAGS =  -g 
 
 #PATH#
-OBJ_PATH =  obj/
+OBJ_PATH =  obj
 SRC_PATH =  ./
 INC_PATH :=  ./
 
@@ -49,8 +49,6 @@ ifeq ($(HOSTTYPE),x86_64_Darwin)
 endif
 
 $(OBJ): $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
-	echo $(INC_BREW)
-	echo $(LIB_BREW)
 	mkdir -p $(dir $@)
 	$(CC) -o $@ $(CFLAGS) -I$(INC_PATH) $(INC_BREW) -I../inc/ -c $<
 

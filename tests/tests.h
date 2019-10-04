@@ -12,6 +12,7 @@
 
 void	test_add_zone_after(void **state);
 void	test_add_zone_null(void **state);
+void	test_add_zone_large(void **state);
 void	test_search_zone_same(void **state);
 void	test_search_zone_needAdd(void **state);
 void	test_page_free_0pageFree(void **state);
