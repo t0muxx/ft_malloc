@@ -12,6 +12,14 @@
 
 #include "ft_malloc.h"
 
+void	*malloc_large(t_zone **zone, size_t size)
+{
+	if (add_zone_large(zone) < 0)
+	{
+		return (NULL);
+	}
+}
+
 void	*malloc_not_large(t_zone **zone, size_t size)
 {
 	t_zone	*zone_used;
@@ -78,7 +86,7 @@ void	*ft_malloc(size_t size)
 	else 
 	{
 		ft_putendl("|DEBUG| -> large....");
-		return (NULL);
+		return (malloc_large(&(g_malloc_state.zone_large), size));
 	}
 	return (NULL);
 }

@@ -12,6 +12,11 @@
 
 #include "ft_malloc.h"
 
+size_t aligne_large(size_t size)
+{
+	return (size + getpagesize() - (size % getpagesize()));
+}
+
 size_t	size_max(size_t multiple)
 {
 	size_t size_zone;

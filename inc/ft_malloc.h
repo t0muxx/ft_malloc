@@ -59,6 +59,7 @@ typedef struct	s_malloc
 {
 	t_zone			*zone_tiny;
 	t_zone			*zone_medium;
+	t_zone			*zone_large;
 
 }				t_malloc;
 
@@ -87,6 +88,9 @@ void	remove_zone(t_zone **zone, size_t size_alloc_min);
 int		cnt_zone(t_zone *zone);
 int		should_delete_zone(t_zone *zone);
 void	delete_zone(t_zone **zone, t_zone **del);
+
+
+size_t	aligne_large(size_t size);
 
 /*
 ** PAGE :

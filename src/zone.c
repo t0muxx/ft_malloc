@@ -90,6 +90,42 @@ t_zone	*search_zone(t_zone **zone, size_t size)
 	return (tmp);
 }
 
+int		add_zone_large(t_zone **zone, size_t size)
+{
+	t_zone *head;
+	t_zone *new;
+	size_t aligned;
+
+	new = NULL;
+	aligned = aligne_large(size + sizeof(t_zone));
+	new = mmap(0, aligned,
+		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+	if (new == MAP_FAILED)
+	{
+		ft_putendl_fd("malloc : can't mmap memory for zone_tiny", 2);
+		return (-1);
+	}
+	ft_memset(new, 0, size);
+	new->size = 1;
+	new->used = 0;
+	new->next = NULL;
+	new->pages_nbr = 0;
+	new->chunks = NULL;
+	head = *zone;
+	if (*zone == NULL)
+		*zone = new;
+	else
+	{
+		while (head->next != NULL)
+			head = head->next;
+		head->next = new;
+	}
+#ifdef DEBUG_ZONE
+	print_zones(*zone, "zones :");
+#endif
+	return (0);
+}
+
 /*
 ** Add new zone, the 0x1000 here is for the t_zone struct
 */
@@ -114,7 +150,7 @@ int		add_zone(t_zone **zone, size_t pages_nbr)
 	new->used = 0;
 	new->next = NULL;
 	new->pages_nbr = pages_nbr;
-	ft_memset(new->state, USED, MULTIPLE_ZONE_TINY);
+	ft_memset(new->state, USED, pages_nbr);
 	new->chunks = NULL;
 	head = *zone;
 	if (*zone == NULL)
