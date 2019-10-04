@@ -6,11 +6,41 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 10:51:30 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/03 18:39:09 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/04 15:19:32 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
+
+void	cnt_total_zone()
+{
+	t_zone *zone;
+	int i;
+
+	i = 0;
+	zone = g_malloc_state.zone_tiny;
+	while (zone)
+	{
+		i++;
+		zone = zone->next;
+	}
+	zone = g_malloc_state.zone_medium;
+	while (zone)
+	{
+		i++;
+		zone = zone->next;
+	}
+	zone = g_malloc_state.zone_large;
+	while (zone)
+	{		
+		i++;
+		zone = zone->next;
+	}
+	ft_putstr("|DEBUG| -> total zone : ");
+	ft_putnbr(i);
+	ft_putendl("");
+
+}
 
 void	print_chunk(t_chunk *tmp)
 {
@@ -90,10 +120,10 @@ void	print_zones(t_zone *zone, char *zone_name)
 		ft_putptr(tmp->next);
 		ft_putendl("");
 		ft_putstr("|DEBUG| -> zone->size : ");
-		ft_putnbr(zone->size);
+		ft_putnbr(tmp->size);
 		ft_putendl("");
 		ft_putstr("|DEBUG| -> zone->used : ");
-		ft_putnbr(zone->used);
+		ft_putnbr(tmp->used);
 		ft_putendl("");
 		ft_putstr("|DEBUG| -> Addr space ");
 		ft_putptr(zone_2_mem(tmp));

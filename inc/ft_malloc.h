@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/04 14:42:57 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/04 15:34:58 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <unistd.h>
 
 # define ALIGN 16
-# define MULTIPLE_ZONE_TINY 16
+# define MULTIPLE_ZONE_TINY 16 
 # define MULTIPLE_ZONE_MEDIUM 32
 # define DEBUG 0
 //# define DEBUG_CHUNK 1
@@ -124,4 +124,5 @@ size_t	size_max(size_t multiple);
 void	print_chunks(t_chunk *chunk, char *chunk_name);
 void	print_zones(t_zone *zone, char *zone_name);
 void	print_chunk(t_chunk *tmp);
+void	cnt_total_zone();
 #endif

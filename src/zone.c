@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/04 14:42:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/04 15:23:11 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,15 @@ t_zone		*add_zone_large(t_zone **zone, size_t size)
 	aligned = aligne_large(size + sizeof(t_zone));
 	new = mmap(0, aligned,
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+	ft_putstr("mmap -> ");
+	ft_putnbr(aligned);
+	ft_putendl("");
 	if (new == MAP_FAILED)
 	{
 		ft_putendl_fd("malloc : can't mmap memory for zone_tiny", 2);
 		return (NULL);
 	}
-	ft_memset(new, 0, size);
+	ft_memset(new, 0, aligned);
 	new->size = size;
 	new->used = 0;
 	new->next = NULL;
@@ -140,6 +143,9 @@ int		add_zone(t_zone **zone, size_t pages_nbr)
 	size = 0x1000 * pages_nbr;
 	new = mmap(0, size + 0x1000,
 			PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+	ft_putstr("mmap -> ");
+	ft_putnbr(size + 0x1000);
+	ft_putendl("");
 	if (new == MAP_FAILED)
 	{
 		ft_putendl_fd("malloc : can't mmap memory for zone_tiny", 2);

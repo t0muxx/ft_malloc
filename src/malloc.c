@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:20:19 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/04 14:11:26 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/04 15:27:46 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,22 +78,18 @@ void	*ft_malloc(size_t size)
 	}
 	if (size < size_max(MULTIPLE_ZONE_TINY))
 	{
-		ft_putendl("|DEBUG| -> tiny....");
 		return (malloc_not_large(&(g_malloc_state.zone_tiny), size));
 	}
 	else if (size < size_max(MULTIPLE_ZONE_MEDIUM))
 	{
-		ft_putendl("|DEBUG| -> medium....");
 		return (malloc_not_large(&(g_malloc_state.zone_medium), size));
 	}
 	else 
 	{
-		ft_putendl("|DEBUG| -> large....");
 		return (malloc_large(&(g_malloc_state.zone_large), size));
 	}
 	return (NULL);
 }
-
 void	*malloc(size_t size)
 {
 	void *ptr;
@@ -104,6 +100,7 @@ void	*malloc(size_t size)
 	ft_putptr(ptr);
 	ft_putendl("");
 #endif
+	cnt_total_zone();
 	return (ptr);
 }
 
