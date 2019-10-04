@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 16:12:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/03 12:54:09 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/04 14:28:45 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,41 @@ void	add_chunk(t_chunk **head, void *zone_base, size_t sz_aligned)
 	new->prev = tmp;
 }
 
-int		search_chunk(t_chunk *chunk)
+int		search_chunk_large(t_zone **zones, void *ptr)
 {
-	t_zone	*zones;
-	t_chunk	*chunks;
-	zones = g_malloc_state.zone_tiny;
-	chunks = zones->chunks;
-	while (chunks)
+	t_zone *zone;
+	t_zone *find;
+
+	zone = *zones;
+	find = ptr - sizeof(t_zone);
+	while (zone)
 	{
-		if (chunk == chunks)
+		if (zone == find)
 			return (1);
-		chunks = chunks->next;
+		zone = zone->next;
+	}
+	return (0);
+}
+
+int		search_chunk(t_zone **zones, void *ptr)
+{
+	t_chunk	*chunks;
+	t_zone	*zone;
+	t_chunk *chunk;
+
+	chunk = ptr - sizeof(t_chunk);
+	zone = *zones;
+	chunks = NULL;
+	while (zone)
+	{
+		chunks = zone->chunks;
+		while (chunks)
+		{
+			if (chunk == chunks)
+				return (1);
+			chunks = chunks->next;
+		}
+		zone = zone->next;
 	}
 	return (0);
 }

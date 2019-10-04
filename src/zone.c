@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/03 21:34:35 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/04 14:42:53 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		should_delete_zone(t_zone *zone)
 	return (1);
 }
 
-void	delete_zone(t_zone **zone, t_zone **del)
+void	delete_zone(t_zone **zone, t_zone **del, size_t size)
 {
 	t_zone *tmp;
 	t_zone *cpy;
@@ -48,13 +48,13 @@ void	delete_zone(t_zone **zone, t_zone **del)
 	if (*zone == *del)
 	{
 		*zone = (*del)->next;
-		munmap(cpy, getpagesize());
+		munmap(cpy, size);
 		return ;
 	}
 	while (tmp->next && tmp->next != (*del))
 		tmp = tmp->next;
 	tmp->next = (*del)->next;
-	munmap(cpy, getpagesize());
+	munmap(cpy, size);
 }
 
 /*
@@ -90,7 +90,7 @@ t_zone	*search_zone(t_zone **zone, size_t size)
 	return (tmp);
 }
 
-int		add_zone_large(t_zone **zone, size_t size)
+t_zone		*add_zone_large(t_zone **zone, size_t size)
 {
 	t_zone *head;
 	t_zone *new;
@@ -103,10 +103,10 @@ int		add_zone_large(t_zone **zone, size_t size)
 	if (new == MAP_FAILED)
 	{
 		ft_putendl_fd("malloc : can't mmap memory for zone_tiny", 2);
-		return (-1);
+		return (NULL);
 	}
 	ft_memset(new, 0, size);
-	new->size = 1;
+	new->size = size;
 	new->used = 0;
 	new->next = NULL;
 	new->pages_nbr = 0;
@@ -121,9 +121,9 @@ int		add_zone_large(t_zone **zone, size_t size)
 		head->next = new;
 	}
 #ifdef DEBUG_ZONE
-	print_zones(*zone, "zones :");
+	print_zones(*zone, "zones_larges :");
 #endif
-	return (0);
+	return (new);
 }
 
 /*

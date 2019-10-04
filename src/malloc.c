@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:20:19 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/03 18:00:59 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/04 14:11:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 void	*malloc_large(t_zone **zone, size_t size)
 {
-	if (add_zone_large(zone) < 0)
-	{
+	t_zone *new;
+
+	new = NULL;
+	new = add_zone_large(zone, size);
+	if (new == NULL)
 		return (NULL);
-	}
+	return ((void *)new + sizeof(t_zone));
 }
 
 void	*malloc_not_large(t_zone **zone, size_t size)

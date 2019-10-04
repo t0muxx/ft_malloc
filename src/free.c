@@ -6,11 +6,19 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 11:30:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/03 21:28:01 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/04 14:40:08 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
+
+void	munmap_large(t_zone **zone, void *ptr)
+{
+	t_zone *del;
+
+	del = ptr - sizeof(t_zone);
+	delete_zone(zone, &del, aligne_large(del->size + sizeof(t_zone)));
+}
 
 void	munmap_small_medium(t_zone **zones)
 {
@@ -23,7 +31,7 @@ void	munmap_small_medium(t_zone **zones)
 	{
 		page_free(&zone, zone->pages_nbr);
 		if (should_delete_zone(zone))
-			delete_zone(zones, &zone);
+			delete_zone(zones, &zone, getpagesize());
 		zone = zone->next;
 	}
 }
@@ -34,18 +42,32 @@ void	ft_free(void *ptr)
 
 	if (ptr == NULL)
 		return ;
-	if (search_chunk(ptr) == 0)
+	if (search_chunk(&(g_malloc_state.zone_tiny), ptr) == 1)
+	{
+		chunk = ptr - sizeof(t_chunk);
+		chunk->status = FREE;
+		munmap_small_medium(&(g_malloc_state.zone_tiny));
 		return ;
+	}
+	if (search_chunk(&(g_malloc_state.zone_medium), ptr) == 1)
+	{
+		chunk = ptr - sizeof(t_chunk);
+		chunk->status = FREE;
+		munmap_small_medium(&(g_malloc_state.zone_medium));
+		return ;
+	}
+	if (search_chunk_large(&g_malloc_state.zone_large, ptr) == 1)
+	{
+		munmap_large(&g_malloc_state.zone_large, ptr);
+		return;
+	}
+	return ;
+
+
 #ifdef DEBUG_FREE
 	ft_putendl("|DEBUG| -> before free");
 	print_chunks(g_malloc_state.zone_tiny->chunks, "chunk_tiny");
 #endif
-	chunk = ptr - sizeof(t_chunk);
-	if (chunk->size < size_max(MULTIPLE_ZONE_TINY))
-	{
-		chunk->status = FREE;
-		munmap_small_medium(&(g_malloc_state.zone_tiny));
-	}
 #ifdef DEBUG_FREE
 	ft_putendl("|DEBUG| -> after free");
 	print_chunks(g_malloc_state.zone_tiny->chunks, "chunk_tiny");
