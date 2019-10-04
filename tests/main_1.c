@@ -23,7 +23,7 @@ int main(void)
 	void *ptr;
 
 	i = 0;
-	while (value[i] != 0)
+	while (i < 2)
 	{
 		ptr = malloc(value[i]);
 		if (ptr == NULL)
@@ -31,6 +31,7 @@ int main(void)
 			write(1, "ERROR \n", 8);
 			return (1);
 		}
+		free(ptr);
 		ptr = NULL;
 		i++;
 	}
