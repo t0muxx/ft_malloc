@@ -18,17 +18,16 @@ NAME =			unit_tests.bin
 
 #FLAG AND COMPILATOR#
 CC =		clang
-CFLAGS =  -g -fsanitize=address
+CFLAGS =  -g 
 
 #PATH#
 OBJ_PATH =  obj/
 SRC_PATH =  ./
+INC_PATH :=  ./
 
-ifeq ($(HOSTTYPE),"x86_64_Darwin")
-	INC_PATH := ./ -I/Users/tmaraval/.brew/include
-	LIB_BREW := -L/Users/tmaraval/.brew/lib
-else
-	INC_PATH :=  ./
+ifeq ($(HOSTTYPE),x86_64_Darwin)
+	INC_BREW = -I/Users/tmaraval/.brew/include
+	LIB_BREW = -L/Users/tmaraval/.brew/lib
 endif
 
 SRCS = main.c \
@@ -44,14 +43,16 @@ SRC = $(addprefix $(SRC_PATH)/,$(SRCS))
 all: $(NAME) $(COVERAGE)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -I$(INC_PATH) $(OBJ) ../libft_malloc.so $(LIB_BREW) -lcmocka -o $(NAME)
-ifeq ($(HOSTTYPE),"x86_64_Darwin")
+	$(CC) $(CFLAGS) -I$(INC_PATH) $(INC_BREW) $(OBJ) ../libft_malloc.so $(LIB_BREW) -lcmocka -o $(NAME)
+ifeq ($(HOSTTYPE),x86_64_Darwin)
 	cp ../libft_malloc_x86_64_Darwin.so .
 endif
 
 $(OBJ): $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
-	@mkdir -p $(dir $@)
-	@$(CC) -o $@ $(CFLAGS) -I$(INC_PATH) -I../inc/ -c $<
+	echo $(INC_BREW)
+	echo $(LIB_BREW)
+	mkdir -p $(dir $@)
+	$(CC) -o $@ $(CFLAGS) -I$(INC_PATH) $(INC_BREW) -I../inc/ -c $<
 
 clean:
 	/bin/rm -rf $(OBJ_PATH)

@@ -17,6 +17,7 @@ void	test_delete_zone(void **state)
 {
 	t_zone *zone;
 	
+	zone = NULL;
 	add_zone(&zone, 16);
 	add_zone(&zone, 16);
 	add_zone(&zone, 16);

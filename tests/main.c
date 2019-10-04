@@ -33,7 +33,7 @@ int main(void)
 		*/
         cmocka_unit_test(test_delete_zone),
     };
-
+	printf("|DEBUG| -> pagesize = %d\n", getpagesize());
     return cmocka_run_group_tests(tests, NULL, NULL);
 }
 
