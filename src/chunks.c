@@ -46,7 +46,22 @@ void	add_chunk(t_chunk **head, void *zone_base, size_t sz_aligned)
 	new->prev = tmp;
 }
 
-void	*search_chunk(t_zone *head, size_t sz_aligned)
+int		search_chunk(t_chunk *chunk)
+{
+	t_zone	*zones;
+	t_chunk	*chunks;
+	zones = g_malloc_state.zone_tiny;
+	chunks = zones->chunks;
+	while (chunks)
+	{
+		if (chunk == chunks)
+			return (1);
+		chunks = chunks->next;
+	}
+	return (0);
+}
+
+void	*search_free_chunk(t_zone *head, size_t sz_aligned)
 {
 	t_zone	*tmp_zone;
 	t_chunk *tmp_chunk;

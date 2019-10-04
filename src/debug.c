@@ -33,7 +33,7 @@ void	print_chunk(t_chunk *tmp)
 	ft_putstr("|DEBUG| -> chunk->dataAddr = ");
 	ft_putptr((void *)tmp + sizeof(t_chunk));
 	ft_putendl("");
-	ft_putstr("--- next -----\n");
+	ft_putstr("--- END -----\n");
 }
 
 void	print_chunks(t_chunk *chunk, char *chunk_name)
@@ -66,6 +66,7 @@ void	print_chunks(t_chunk *chunk, char *chunk_name)
 		ft_putstr("--- next -----\n");
 		tmp = tmp->next;
 	}
+	ft_putstr("--- END -----\n");
 }
 
 void	print_zones(t_zone *zone, char *zone_name)

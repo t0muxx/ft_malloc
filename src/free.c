@@ -32,6 +32,10 @@ void	ft_free(void *ptr)
 {
 	t_chunk *chunk;
 
+	if (ptr == NULL)
+		return ;
+	if (search_chunk(ptr) == 0)
+		return ;
 #ifdef DEBUG_FREE
 	ft_putendl("|DEBUG| -> before free");
 	print_chunks(g_malloc_state.zone_tiny->chunks, "chunk_tiny");

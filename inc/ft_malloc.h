@@ -25,7 +25,7 @@
 # define MULTIPLE_ZONE_MEDIUM 32
 # define DEBUG 0
 //# define DEBUG_CHUNK 1
-# define DEBUG_ZONE 1
+//# define DEBUG_ZONE 1
 //# define DEBUG_FREE 1
 //# define DEBUG_PAGE 1
 # define ALIGN_SIZE(x) (x + ALIGN - (x%ALIGN))
@@ -104,12 +104,13 @@ t_chunk *page_free_find_chunk_left_border(t_chunk *chunk, void *base, int p);
 ** CHUNKS :  
 */
 int		have_free_chunk(t_chunk **head);
+int		search_chunk(t_chunk *chunk);
 void	remove_free_chunk(t_chunk **head);
 void	munmap_small_medium(t_zone **zone);
 int		have_free_chunk(t_chunk **head);
 void	add_chunk(t_chunk **head, void *zone_base, size_t sz_aligned);
 void	delete_chunk(t_chunk **head, t_chunk *toDelete);
-void 	*search_chunk(t_zone *head, size_t sz_aligned);
+void 	*search_free_chunk(t_zone *head, size_t sz_aligned);
 
 size_t	size_max(size_t multiple);
 
