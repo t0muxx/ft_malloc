@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:20:19 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/04 15:27:46 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/07 09:29:00 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	*ft_malloc(size_t size)
 	}
 	return (NULL);
 }
+/*
 void	*malloc(size_t size)
 {
 	void *ptr;
@@ -112,4 +113,4 @@ void	free(void *ptr)
 	ft_putstr(");\n");
 #endif
 	ft_free(ptr);
-}
+}*/

@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 15:07:40 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/04 17:43:24 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/07 11:20:27 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,6 @@ void	page_free_check_chunk(t_zone **current_zone, t_chunk **chunk,
 	t_chunk *right_border;
 
 	*chunk = (*current_zone)->chunks;
-#ifdef DEBUG_PAGE
-	ft_putstr("page = ");
-	ft_putnbr(p);
-	ft_putendl("");
-#endif
 	if ((*current_zone)->state[p] != FREE)
 	{
 		right_border = page_free_find_chunk_right_border(*chunk, base, p);
@@ -138,13 +133,13 @@ void	page_free_check_chunk(t_zone **current_zone, t_chunk **chunk,
 				{
 					page_free_remove_chunks(&((*current_zone)->chunks), right_border, left_border);
 					munmap(base + getpagesize() * p, getpagesize());
-				}
 #ifdef DEBUG_PAGE
 				ft_putstr("munmaped page num : ");
 				ft_putnbr(p);
 				ft_putendl("");
 				print_chunks((*current_zone)->chunks, "############## AFTER REMOVE ########");
 #endif
+				}
 			}
 		}
 	}
@@ -188,16 +183,30 @@ void	page_free(t_zone **current_zone, size_t pages_nbr)
 	int		p;
 	t_chunk	*chunk;
 	void	*base;
+	int		i;
 
+	i = 0;
 	base = zone_2_mem(*current_zone);
 	p = 0;
 	chunk = (*current_zone)->chunks;
-#ifdef DEBUG_PAGE
-	print_chunks(chunk, "ICI : ");
-#endif
 	while ((size_t)p < pages_nbr)
 	{
-		page_free_check_chunk(current_zone, &chunk, base, p);
+#ifdef DEBUG_PAGE
+	ft_putstr("page = ");
+	ft_putnbr(p);
+	ft_putendl("");
+	print_chunks((*current_zone)->chunks, "ICI : ");
+#endif
+		if ((*current_zone)->chunks == NULL)
+		{
+			while (i < (int)pages_nbr)
+			{
+				(*current_zone)->state[i] = FREE;
+				i++;
+			}
+			return ;
+		}
+		page_free_check_chunk(current_zone, (&(*current_zone)->chunks), base, p);
 		p++;
 	}
 }

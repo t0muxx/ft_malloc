@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 11:30:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/04 14:40:08 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/07 11:34:44 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,12 @@ void	munmap_small_medium(t_zone **zones)
 	{
 		page_free(&zone, zone->pages_nbr);
 		if (should_delete_zone(zone))
+		{
 			delete_zone(zones, &zone, getpagesize());
+			zone = *zones;
+		}
+			
+		print_zones(zone, "ICICICICIC");
 		zone = zone->next;
 	}
 }

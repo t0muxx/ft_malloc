@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/04 17:35:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/07 11:30:51 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,9 @@ int		should_delete_zone(t_zone *zone)
 
 void	delete_zone(t_zone **zone, t_zone **del, size_t size)
 {
-	t_zone *tmp;
 	t_zone *cpy;
 
 	cpy = *del;
-	tmp = *zone;
 #ifdef DEBUG_ZONE
 	ft_putstr("|DEBUG| -> deleting zone : ");
 	ft_putptr(*del);
@@ -40,21 +38,14 @@ void	delete_zone(t_zone **zone, t_zone **del, size_t size)
 #endif
 	if (*zone == NULL || *del == NULL)
 		return ;
-	if ((*del)->next == NULL)
-	{
-		*zone = NULL;
-		return ;
-	}
 	if (*zone == *del)
-	{
 		*zone = (*del)->next;
-		munmap(cpy, size);
-		return ;
-	}
-	while (tmp->next && tmp->next != (*del))
-		tmp = tmp->next;
-	tmp->next = (*del)->next;
+	if ((*del)->next != NULL)
+		(*del)->next->prev = (*del)->prev;
+	if ((*del)->prev != NULL)
+		(*del)->prev->next = (*del)->next;
 	munmap(cpy, size);
+	print_zones(*zone, "ZONOE AFTER REMOVE");
 }
 
 /*
@@ -159,6 +150,7 @@ int		add_zone(t_zone **zone, size_t pages_nbr)
 	new->size = size - sizeof(t_zone);
 	new->used = 0;
 	new->next = NULL;
+	new->prev = NULL;
 	new->pages_nbr = pages_nbr;
 	ft_memset(new->state, USED, pages_nbr);
 	new->chunks = NULL;
@@ -170,6 +162,7 @@ int		add_zone(t_zone **zone, size_t pages_nbr)
 		while (head->next != NULL)
 			head = head->next;
 		head->next = new;
+		new->prev = head;
 	}
 #ifdef DEBUG_ZONE
 	print_zones(*zone, "zones :");
