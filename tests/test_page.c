@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 15:24:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/04 18:04:09 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/07 11:35:20 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,23 @@ void	test_page_free_Page0ToFree(void **state)
 	assert_int_equal(cnt_chunks(&(zone->chunks), FREE), 2);
 	page_free(&zone, zone->pages_nbr);
 	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 3);
-	assert_int_equal(cnt_chunks(&(zone->chunks), FREE), 0);
+	assert_int_equal(cnt_chunks(&(zone->chunks), FREE), 2);
 	assert_int_equal(zone->state[0], FREE);
+	zone->chunks->next->next->status = FREE;
+	zone->chunks->next->next->next->status = FREE;
+	zone->chunks->next->next->next->next->status = FREE;
+	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 0);
+	assert_int_equal(cnt_chunks(&(zone->chunks), FREE), 5);
+	page_free(&zone, zone->pages_nbr);
+	assert_int_equal(zone->state[1], FREE);
+	assert_int_equal(zone->state[2], FREE);
+	assert_int_equal(zone->state[3], FREE);
+	assert_int_equal(zone->state[4], FREE);
+	add_zone(&zone, 16);
+	assert_int_equal(cnt_zone(zone), 2);
+	print_zones(zone, "WIWIWIWIWIWIWIW");
+	munmap_small_medium(&zone);
+	assert_int_equal(cnt_zone(zone), 1);
 }
 
 void	test_page_free_0pageFree(void **state)
