@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 15:24:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/07 11:35:20 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/08 16:52:51 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	test_page_free_Page16ToFree(void **state)
 	zone->chunks->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->status = FREE;
 	zone->used += 4064 + sizeof(t_chunk);
 	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 14);
-	page_free(&zone, zone->pages_nbr);
+	page_free(&zone);
 }
 
 void	test_page_free_Page2ToFree(void **state)
@@ -85,7 +85,7 @@ void	test_page_free_Page2ToFree(void **state)
 	
 	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 4);
 	assert_int_equal(cnt_chunks(&(zone->chunks), FREE), 3);
-	page_free(&zone, zone->pages_nbr);
+	page_free(&zone);
 	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 4);
 	assert_int_equal(cnt_chunks(&(zone->chunks), FREE), 1);
 	assert_int_equal(zone->state[2], FREE);
@@ -136,7 +136,8 @@ void	test_page_free_Page1ToFree(void **state)
 	
 	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 3);
 	assert_int_equal(cnt_chunks(&(zone->chunks), FREE), 4);
-	page_free(&zone, zone->pages_nbr);
+	print_chunks(zone->chunks, "after test : ");
+	page_free(&zone);
 	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 3);
 	assert_int_equal(cnt_chunks(&(zone->chunks), FREE), 1);
 	assert_int_equal(zone->state[1], FREE);
@@ -177,7 +178,7 @@ void	test_page_free_Page0ToFree(void **state)
 	
 	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 3);
 	assert_int_equal(cnt_chunks(&(zone->chunks), FREE), 2);
-	page_free(&zone, zone->pages_nbr);
+	page_free(&zone);
 	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 3);
 	assert_int_equal(cnt_chunks(&(zone->chunks), FREE), 2);
 	assert_int_equal(zone->state[0], FREE);
@@ -186,7 +187,7 @@ void	test_page_free_Page0ToFree(void **state)
 	zone->chunks->next->next->next->next->status = FREE;
 	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 0);
 	assert_int_equal(cnt_chunks(&(zone->chunks), FREE), 5);
-	page_free(&zone, zone->pages_nbr);
+	page_free(&zone);
 	assert_int_equal(zone->state[1], FREE);
 	assert_int_equal(zone->state[2], FREE);
 	assert_int_equal(zone->state[3], FREE);
@@ -224,7 +225,7 @@ void	test_page_free_0pageFree(void **state)
 	add_chunk(&(zone->chunks), zone_2_mem(zone) + zone->used, ALIGN_SIZE(6000));
 	zone->used += ALIGN_SIZE(6000) + sizeof(t_chunk);
 	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 5);
-	page_free(&zone, zone->pages_nbr);
+	page_free(&zone);
 	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 5);
 	while (i < 16)
 	{
