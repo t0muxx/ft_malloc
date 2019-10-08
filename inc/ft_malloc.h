@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/04 18:08:20 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/08 14:27:50 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,14 @@
 # define MULTIPLE_ZONE_MEDIUM 32
 //# define DEBUG 0
 //# define DEBUG_CHUNK 1
-# define DEBUG_ZONE 1
+//# define DEBUG_ZONE 1
 //# define DEBUG_FREE 1
-# define DEBUG_PAGE 1
+//# define DEBUG_PAGE 1
+//# define DEBUG_MUNMAP 1
+//# define DEBUG_FREE_RET 1
+//# define DEBUG_CALLOC 1
+//# define DEBUG_MALLOC 1
+//# define DEBUG_REALLOC 1
 # define ALIGN_SIZE(x) (((x) + ((ALIGN) - 1)) & ~((ALIGN) - 1))
 
 enum			e_status {
@@ -88,7 +93,7 @@ int		zone_need_free(t_zone **zone, size_t size_alloc_min);
 void	remove_zone(t_zone **zone, size_t size_alloc_min);
 int		cnt_zone(t_zone *zone);
 int		should_delete_zone(t_zone *zone);
-void	delete_zone(t_zone **zone, t_zone **del, size_t size);
+void	delete_zone(t_zone **zone, t_zone *del, size_t size);
 t_zone	*add_zone_large(t_zone **zone, size_t size);
 
 
