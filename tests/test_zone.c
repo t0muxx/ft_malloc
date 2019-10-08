@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 14:09:07 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/04 17:49:49 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/07 15:01:23 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	test_delete_zone(void **state)
 	add_zone(&zone, 16);
 	add_zone(&zone, 16);
 	assert_int_equal(cnt_zone(zone), 3);
-	delete_zone(&zone, &(zone->next), getpagesize());
+	delete_zone(&zone, zone->next, getpagesize());
 	assert_int_equal(cnt_zone(zone), 2);
-	delete_zone(&zone, &zone, getpagesize());
+	delete_zone(&zone, zone, getpagesize());
 	assert_int_equal(cnt_zone(zone), 1);
-	delete_zone(&zone, &zone, getpagesize());
+	delete_zone(&zone, zone, getpagesize());
 	assert_int_equal(cnt_zone(zone), 0);
 }
 
