@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/07 11:30:51 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/08 14:24:21 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		should_delete_zone(t_zone *zone)
 {
 	int i;
+	t_chunk *chunk;
 
 	i = 0;
 	while (i < zone->pages_nbr)
@@ -23,29 +24,54 @@ int		should_delete_zone(t_zone *zone)
 			return (0);
 		i++;
 	}
+	if (zone->state[0] == FREE)
+	{
+		chunk = zone->chunks;
+		while (chunk && (void *)chunk < (void *)zone + getpagesize())
+		{
+			if (chunk->status != FREE)
+				return (0);
+			chunk = chunk->next;
+		}
+	}
 	return (1);
 }
 
-void	delete_zone(t_zone **zone, t_zone **del, size_t size)
+void	delete_zone(t_zone **zone, t_zone *del, size_t size)
 {
 	t_zone *cpy;
 
-	cpy = *del;
+	cpy = del;
 #ifdef DEBUG_ZONE
+	print_zones(*zone, "ZONOE BEFORE REMOVE");
 	ft_putstr("|DEBUG| -> deleting zone : ");
-	ft_putptr(*del);
+	ft_putptr(del);
 	ft_putendl("");
 #endif
-	if (*zone == NULL || *del == NULL)
+	if (*zone == NULL || del == NULL)
 		return ;
-	if (*zone == *del)
-		*zone = (*del)->next;
-	if ((*del)->next != NULL)
-		(*del)->next->prev = (*del)->prev;
-	if ((*del)->prev != NULL)
-		(*del)->prev->next = (*del)->next;
+	if (*zone == del)
+		*zone = del->next;
+	if (del->next != NULL)
+		del->next->prev = del->prev;
+	if (del->prev != NULL)
+		del->prev->next = del->next;
+#ifdef DEBUG_MUNMAP
+	ft_putstr("|DEBUG| munmap(");
+	ft_putptr(cpy);
+	ft_putstr(", ");
+	ft_putnbr(size);
+	ft_putendl(");");
+	if ((long)cpy < 0x7ffff7a9e5a0 && (long)cpy + getpagesize() > 0x7ffff7a9e5a0)
+	{
+		print_chunks(cpy->chunks, "WARNING chunks");
+		ft_putendl("WARNING !!!! ZONE");
+	}
+#endif
 	munmap(cpy, size);
+#ifdef DEBUG_ZONE
 	print_zones(*zone, "ZONOE AFTER REMOVE");
+#endif
 }
 
 /*
@@ -115,6 +141,7 @@ t_zone		*add_zone_large(t_zone **zone, size_t size)
 		while (head->next != NULL)
 			head = head->next;
 		head->next = new;
+		new->prev = head;
 	}
 #ifdef DEBUG_ZONE
 	print_zones(*zone, "zones_larges :");

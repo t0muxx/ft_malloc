@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 15:07:40 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/07 11:20:27 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/08 14:39:57 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,17 @@ void	page_free_check_chunk(t_zone **current_zone, t_chunk **chunk,
 				if (p != 0)
 				{
 					page_free_remove_chunks(&((*current_zone)->chunks), right_border, left_border);
+#ifdef DEBUG_MUNMAP
+	ft_putstr("|DEBUG| munmap(");
+	ft_putptr(base + getpagesize() * p);
+	ft_putstr(", ");
+	ft_putnbr(getpagesize());
+	ft_putendl(");");
+	if ((long)base + getpagesize() * p < 0x7ffff7a9e5a0 && (long)(base + getpagesize() * p) + getpagesize() > 0x7ffff7a9e5a0)
+	{
+		ft_putendl("WARNING !!!! PAGE");
+	}
+#endif
 					munmap(base + getpagesize() * p, getpagesize());
 #ifdef DEBUG_PAGE
 				ft_putstr("munmaped page num : ");

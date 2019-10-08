@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 16:12:02 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/04 14:28:45 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/08 11:10:51 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ int		search_chunk_large(t_zone **zones, void *ptr)
 	while (zone)
 	{
 		if (zone == find)
+		{
 			return (1);
+		}
 		zone = zone->next;
 	}
 	return (0);
@@ -77,7 +79,9 @@ int		search_chunk(t_zone **zones, void *ptr)
 		while (chunks)
 		{
 			if (chunk == chunks)
+			{
 				return (1);
+			}
 			chunks = chunks->next;
 		}
 		zone = zone->next;

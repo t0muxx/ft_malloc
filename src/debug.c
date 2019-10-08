@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 10:51:30 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/04 15:19:32 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/08 13:48:02 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	print_chunk(t_chunk *tmp)
 	ft_putstr("|DEBUG| -> chunk->dataAddr = ");
 	ft_putptr((void *)tmp + sizeof(t_chunk));
 	ft_putendl("");
+	ft_putendl((void *)tmp + sizeof(t_chunk));
 	ft_putstr("--- END -----\n");
 }
 
