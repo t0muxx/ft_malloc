@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:20:19 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/08 14:29:01 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/08 16:50:32 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,6 @@ void	*ft_realloc(void *ptr, size_t size)
 	{
 		if ((ret = malloc(size)) == NULL)
 			return (NULL);
-		print_chunk(ret);
-		print_chunk(chunk);
 		ft_memcpy(ret, ptr, size);
 		free(ptr);
 	}
@@ -162,7 +160,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		ft_memset(ptr, 0, nmemb * size);
 	return (ptr);
 }
-
+/*
 void *calloc(size_t nmemb, size_t size)
 {
 	void *ret;
@@ -228,4 +226,4 @@ void	free(void *ptr)
 	ft_putstr(");\n");
 #endif
 	ft_free(ptr);
-}
+}*/

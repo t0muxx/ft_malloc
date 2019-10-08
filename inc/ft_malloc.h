@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/08 14:27:50 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/08 17:21:51 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 //# define DEBUG_CHUNK 1
 //# define DEBUG_ZONE 1
 //# define DEBUG_FREE 1
-//# define DEBUG_PAGE 1
+# define DEBUG_PAGE 1
 //# define DEBUG_MUNMAP 1
 //# define DEBUG_FREE_RET 1
 //# define DEBUG_CALLOC 1
@@ -37,7 +37,9 @@
 
 enum			e_status {
 	USED,
-	FREE
+	FREE,
+	TO_FREE,
+	TO_REMOVE,
 };
 
 typedef struct	s_chunk
@@ -102,14 +104,7 @@ size_t	aligne_large(size_t size);
 /*
 ** PAGE :
 */
-void	page_free(t_zone **current_zone, size_t pages_nbr);
-void	page_free_remove_chunk_and_munmap(
-		t_zone **current_zone, t_chunk **chunk, void *base, int p);
-int		page_free_check_chunk_state_for_page(t_chunk **chunk, void *base, int p);
-void	page_free_check_chunk(t_zone **current_zone, t_chunk **chunk,
-								void *base, int p);
-void	page_free(t_zone **current_zone, size_t pages_nbr);
-t_chunk *page_free_find_chunk_left_border(t_chunk *chunk, void *base, int p);
+void	page_free(t_zone **current_zone);
 
 /* 
 ** CHUNKS :  
