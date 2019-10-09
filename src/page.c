@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 15:07:40 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/08 17:36:18 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:16:35 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,26 @@ void	page_free_fill_chunk_to_free(t_zone **current_zone)
 
 	p = 0;
 	chunk_check = (*current_zone)->chunks;
-	chunk_keep = NULL;
+	chunk_keep = chunk_check;
 	while (p < (*current_zone)->pages_nbr)
 	{
 		state = 0;
 		i = 0;
-		chunk_keep = chunk_check;
 		ft_putstr("page = ");
 		ft_putnbr(p);
 		ft_putendl("");
+		if (p > 0 && chunk_check && chunk_check->prev && chunk_check != (void *)(*current_zone) + getpagesize() * (p))
+			chunk_check = chunk_check->prev;
+		chunk_keep = chunk_check;
 		while (chunk_check && (void *)chunk_check < (void *)(*current_zone) + getpagesize() * (p + 1))
 		{
 			state += chunk_check->status;
 			i++;
 			chunk_check = chunk_check->next;
 		}
+		ft_putstr("chunk_keep = ");
+		ft_putptr(chunk_keep);
+		ft_putendl("");
 		if (state == i && state != 0)
 		{
 			while (chunk_keep && (void *)chunk_keep < (void *)(*current_zone) + getpagesize() * (p + 1))

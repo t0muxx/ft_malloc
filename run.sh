@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OS=$(uname -s)
-if [ "${OS}" == "Linux" ] ; then
+if [ $OS == "Linux" ] ; then
     export LD_PRELOAD=`pwd`/libft_malloc_x86_64_Linux.so
 	export LD_LIBRARY_PATH=`pwd`:$LD_LIBRARY_PATH
     $@
