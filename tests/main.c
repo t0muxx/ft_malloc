@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 16:21:20 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/08 15:28:23 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:09:44 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ int main(void)
         cmocka_unit_test(test_delete_zone),
         cmocka_unit_test(test_page_free_Page0ToFree),
 		cmocka_unit_test(test_page_free_0pageFree),
-        cmocka_unit_test(test_page_free_Page0ToFree),
 		cmocka_unit_test(test_page_free_Page16ToFree),
-		cmocka_unit_test(test_page_free_Page2ToFree),
-        */
-		cmocka_unit_test(test_page_free_Page1ToFree),
+		cmocka_unit_test(test_page_free_Page1and2ToFree),
+		cmocka_unit_test(test_page_free_Page1and2ToFree),
+		*/
+		cmocka_unit_test(test_page_free_Page1AlignedToFree),
+		cmocka_unit_test(test_page_free_Page1NoFree),
     };
 	printf("sizeof(t_zone) = %lu\n", sizeof(t_zone));
 	printf("sizeof(t_zone) = %lu\n", ALIGN_SIZE(sizeof(t_zone)));
