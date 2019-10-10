@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/10 10:04:28 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/10 11:20:14 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ void	delete_zone(t_zone **zone, t_zone *del, size_t size)
 	t_zone *cpy;
 
 	cpy = del;
+	ft_putstr("delete zone : ");
+	ft_putptr(del);
+	ft_putstr(" size = : ");
+	ft_putnbr(del->size);
+	ft_putendl("");
 #ifdef DEBUG_ZONE
 	print_zones(*zone, "ZONOE BEFORE REMOVE");
 	ft_putstr("|DEBUG| -> deleting zone : ");
@@ -62,11 +67,6 @@ void	delete_zone(t_zone **zone, t_zone *del, size_t size)
 	ft_putstr(", ");
 	ft_putnbr(size);
 	ft_putendl(");");
-	if ((long)cpy < 0x7ffff7a9e5a0 && (long)cpy + getpagesize() > 0x7ffff7a9e5a0)
-	{
-		print_chunks(cpy->chunks, "WARNING chunks");
-		ft_putendl("WARNING !!!! ZONE");
-	}
 #endif
 	munmap(cpy, size);
 #ifdef DEBUG_ZONE

@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:20:19 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/08 16:50:32 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/10 10:42:05 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		ft_memset(ptr, 0, nmemb * size);
 	return (ptr);
 }
-/*
+
 void *calloc(size_t nmemb, size_t size)
 {
 	void *ret;
@@ -226,4 +226,4 @@ void	free(void *ptr)
 	ft_putstr(");\n");
 #endif
 	ft_free(ptr);
-}*/
+}
