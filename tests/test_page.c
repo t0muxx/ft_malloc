@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 15:24:03 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/10 10:09:01 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/10 14:56:54 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,9 +327,67 @@ void	test_page_free_Page1ManyToFree(void **state)
           |Z  |                      |   |     P.0
           |H  |       3016 USED      | 20|
           |DR |                      |   |
+0x1000    +---+-+------------------------+
+          |     |                    |   |
+          |00   |     2096 FREE      |   |   P.1
+          |FREE |                    |   |
+          +-----+--------------------+---+
+          |                              |
+          |                              |  P.2
+          |                              |
+          +------------------------------+
+          |                              |
+          |                              |    P.3
+          |                              |
+          +------------------------------+
+*/
+void	test_page_free_Page1NothingAfterNoFree(void **state)
+{
+	t_zone *zone;
+	t_chunk *ck;
+	int i;
+
+	i = 0;
+	ck = NULL;
+	zone = NULL;
+	add_zone(&zone, 16);
+	assert_ptr_not_equal(zone, NULL);
+	assert_ptr_not_equal(zone_2_mem(zone), NULL);
+	zone->chunks = NULL;
+	assert_ptr_equal(zone->chunks, NULL);
+	
+	add_chunk(&(zone->chunks), zone_2_mem(zone), 3016 - sizeof(t_chunk));
+	zone->used = 3016;
+	assert_ptr_not_equal(zone->chunks, NULL);
+	assert_ptr_equal((void *)zone_2_mem(zone), (void *)zone->chunks);
+	
+	add_chunk(&(zone->chunks), zone_2_mem(zone) + zone->used, 2000 - sizeof(t_chunk));
+	zone->used += 2000;
+	assert_ptr_equal((void *)zone_2_mem(zone) + 3016, (void *)zone->chunks->next);
+	zone->chunks->next->status = FREE;
+
+	add_chunk(&(zone->chunks), zone_2_mem(zone) + zone->used, 3096 - sizeof(t_chunk));
+	zone->used += 3096;
+	assert_ptr_equal((void *)zone_2_mem(zone) + 3016 + 2000, (void *)zone->chunks->next->next);
+	zone->chunks->next->next->status = FREE;
+
+	print_chunks(zone->chunks, "La : ");	
+	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 1);
+	assert_int_equal(cnt_chunks(&(zone->chunks), FREE), 2);
+	page_free(&zone);
+	assert_int_equal(cnt_chunks(&(zone->chunks), FREE), 2);
+	assert_int_equal(cnt_chunks(&(zone->chunks), USED), 1);
+	assert_int_equal(zone->state[1], USED);
+}
+
+/*
+          +---+----------------------+---+
+          |Z  |                      |   |     P.0
+          |H  |       3016 USED      | 20|
+          |DR |                      |   |
 0x1000    +---+-+--------------------+---+
           |     |                        |
-          |00   |     3016 FREE          |   P.1
+          |00   |     3096 FREE          |   P.1
           |FREE |                        |
           +-----+------------------------+
           |                              |

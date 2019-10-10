@@ -19,6 +19,7 @@ void	test_page_free_0pageFree(void **state);
 void	test_page_free_Page1AlignedToFree(void **state);
 void	test_page_free_Page1NoFree(void **state);
 void	test_page_free_Page1ToFree(void **state);
+void	test_page_free_Page1NothingAfterNoFree(void **state);
 void	test_page_free_Page1ManyToFree(void **state);
 void	test_page_free_Page1ManyAnd2ToFree(void **state);
 void	test_page_free_Page1ManyAnd2ManyToFree(void  **state);
