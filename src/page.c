@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 15:07:40 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/09 18:16:35 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/10 10:12:28 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,12 @@ void	page_free_fill_chunk_to_free(t_zone **current_zone)
 		chunk_keep = chunk_check;
 		while (chunk_check && (void *)chunk_check < (void *)(*current_zone) + getpagesize() * (p + 1))
 		{
-			state += chunk_check->status;
+			ft_putendl("chunk_check : ");
+			print_chunk(chunk_check);
+			if (chunk_check->status == TO_REMOVE)
+				state += 1;
+			else
+				state += chunk_check->status;
 			i++;
 			chunk_check = chunk_check->next;
 		}
@@ -44,14 +49,17 @@ void	page_free_fill_chunk_to_free(t_zone **current_zone)
 		ft_putendl("");
 		if (state == i && state != 0)
 		{
-			while (chunk_keep && (void *)chunk_keep < (void *)(*current_zone) + getpagesize() * (p + 1))
+			if (p > 0)
 			{
-				ft_putendl("added chunk : ");
-				print_chunk(chunk_keep);
-				chunk_keep->status = TO_REMOVE;	
-				chunk_keep = chunk_keep->next;
-			}
+				while (chunk_keep && (void *)chunk_keep < (void *)(*current_zone) + getpagesize() * (p + 1))
+				{
+					ft_putendl("added chunk : ");
+					print_chunk(chunk_keep);
+					chunk_keep->status = TO_REMOVE;	
+					chunk_keep = chunk_keep->next;
+				}
 				(*current_zone)->state[p] = TO_FREE;
+			}
 		}
 		p++;
 	}

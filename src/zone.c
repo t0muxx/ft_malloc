@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/08 14:24:21 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/10 10:04:28 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ int		should_delete_zone(t_zone *zone)
 	int i;
 	t_chunk *chunk;
 
-	i = 0;
+	i = 1;
 	while (i < zone->pages_nbr)
 	{
 		if (zone->state[i] == USED)
 			return (0);
 		i++;
 	}
-	if (zone->state[0] == FREE)
+	if (zone->state[0] == USED)
 	{
 		chunk = zone->chunks;
 		while (chunk && (void *)chunk < (void *)zone + getpagesize())
