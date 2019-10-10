@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 15:07:40 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/10 15:25:20 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/10 15:44:36 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	page_free_fill_chunk_to_free(t_zone **current_zone)
 	while (p < (*current_zone)->pages_nbr)
 	{
 		if ((void *)*current_zone + (*current_zone)->used + sizeof(t_zone)
-			> (void *)*current_zone + getpagesize() * (p + 1))
+			> (void *)*current_zone + getpagesize() * (p + 1)
+			&& (*current_zone)->state[p] != FREE)
 		{
 			state = 0;
 			i = 0;
@@ -128,7 +129,7 @@ void	page_free(t_zone **current_zone)
 			ft_putptr(*current_zone);
 			ft_putstr("\npage  : ");
 			ft_putnbr(i);
-			ft_putendl("");
+			ft_putendl("\n---------");
 #endif
 			munmap((void *)*current_zone + (getpagesize() * i), getpagesize());
 			(*current_zone)->state[i] = FREE;
