@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 15:07:40 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/10 12:25:03 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/10 14:27:59 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,15 @@ void	page_free(t_zone **current_zone)
 	{
 		if ((*current_zone)->state[i] == TO_FREE)
 		{
-			munmap(*current_zone + (getpagesize() * i), getpagesize());
+			ft_putstr("munmap : ");
+			ft_putptr((void *)*current_zone + (getpagesize() * i));
+			ft_putendl("");
+			ft_putstr("zone	 : ");
+			ft_putptr(*current_zone);
+			ft_putstr("\npage  : ");
+			ft_putnbr(i);
+			ft_putendl("");
+			munmap((void *)*current_zone + (getpagesize() * i), getpagesize());
 			(*current_zone)->state[i] = FREE;
 		}
 		i++;

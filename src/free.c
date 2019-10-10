@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 11:30:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/08 16:39:36 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/10 14:03:35 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	munmap_small_medium(t_zone **zones)
 			delete_zone(zones, zone, getpagesize());
 			zone = *zones;
 		}
-			
-		zone = zone->next;
+		else	
+			zone = zone->next;
 	}
 }
 
