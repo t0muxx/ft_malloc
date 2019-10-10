@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 16:21:20 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/09 18:09:44 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/10 10:12:37 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 int main(void)
 {
 	const struct CMUnitTest tests[] = {
-		/*
 		cmocka_unit_test(test_add_zone_large),
 		cmocka_unit_test(test_add_zone_null),
         cmocka_unit_test(test_add_zone_after),
@@ -27,14 +26,14 @@ int main(void)
 		cmocka_unit_test(test_malloc_simple),
 		cmocka_unit_test(test_malloc_multiple),
         cmocka_unit_test(test_delete_zone),
-        cmocka_unit_test(test_page_free_Page0ToFree),
 		cmocka_unit_test(test_page_free_0pageFree),
-		cmocka_unit_test(test_page_free_Page16ToFree),
-		cmocka_unit_test(test_page_free_Page1and2ToFree),
-		cmocka_unit_test(test_page_free_Page1and2ToFree),
-		*/
 		cmocka_unit_test(test_page_free_Page1AlignedToFree),
 		cmocka_unit_test(test_page_free_Page1NoFree),
+		cmocka_unit_test(test_page_free_Page1ToFree),
+		cmocka_unit_test(test_page_free_Page1ManyToFree),
+		cmocka_unit_test(test_page_free_Page1ManyAnd2ToFree),
+		cmocka_unit_test(test_page_free_Page1ManyAnd2ManyToFree),
+		cmocka_unit_test(test_page_free_Page0And1ToFree),
     };
 	printf("sizeof(t_zone) = %lu\n", sizeof(t_zone));
 	printf("sizeof(t_zone) = %lu\n", ALIGN_SIZE(sizeof(t_zone)));
