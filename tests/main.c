@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 16:21:20 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/10 14:57:18 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/10 15:31:00 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int main(void)
 		cmocka_unit_test(test_malloc_simple),
 		cmocka_unit_test(test_malloc_multiple),
 		cmocka_unit_test(test_malloc_buggy),
+		cmocka_unit_test(test_malloc_buggy_2),
 		cmocka_unit_test(test_should_delete_zone),
 		cmocka_unit_test(test_page_free_0pageFree),
 		cmocka_unit_test(test_page_free_Page1AlignedToFree),

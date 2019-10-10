@@ -27,6 +27,7 @@ void	test_page_free_Page0And1ToFree(void **state);
 void	test_malloc_simple(void **state);
 void	test_malloc_multiple(void **state);
 void	test_malloc_buggy(void **state);
+void	test_malloc_buggy_2(void **state);
 void	test_should_delete_zone(void **state);
 void	test_delete_zone(void **state);
 int		cnt_chunks(t_chunk **head, size_t status);

@@ -6,12 +6,40 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 16:08:55 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/10 14:26:57 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/10 15:33:07 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
 #include "ft_malloc.h"
+
+void	test_malloc_buggy_2(void **state)
+{
+	int i;
+	void *ptr[12000];
+
+	i = 0;
+	while (i < 6000)
+	{
+		ptr[i] = ft_malloc(12);
+		strcpy((char *)ptr[i], "123456789");
+		i++;
+	}
+	i = 0;
+	while (i < 6000)
+	{
+		ft_free(ptr[i]);
+		i++;
+	}
+	i = 6000;
+	while (i < 12000)
+	{
+		ptr[i] = ft_malloc(12);
+		strcpy((char *)ptr[i], "123456789");
+		i++;
+	}
+}
+
 
 void	test_malloc_buggy(void **state)
 {
