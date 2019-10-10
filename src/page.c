@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 15:07:40 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/10 15:00:17 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/10 15:25:20 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,13 @@ void	page_free_fill_chunk_to_free(t_zone **current_zone)
 
 }
 
-void	page_free(t_zone **current_zone)
+void	page_free_remove_chunks(t_zone **current_zone)
 {
+	t_chunk *cpy;
 	t_chunk *chunk_to_free;
-	t_chunk	*cpy;
-	int i;
 
-	i = 0;
-	chunk_to_free = NULL;
-	page_free_fill_chunk_to_free(current_zone);
+	chunk_to_free = (*current_zone)->chunks;
+	cpy = NULL;
 #ifdef DEBUG_PAGE
 	print_chunks((*current_zone)->chunks, "chunk to free : ");
 	ft_putstr("page to free : \n");
@@ -99,7 +97,6 @@ void	page_free(t_zone **current_zone)
 		i++;
 	}
 #endif
-	chunk_to_free = (*current_zone)->chunks;
 	while (chunk_to_free)
 	{
 		cpy =  chunk_to_free;
@@ -110,7 +107,15 @@ void	page_free(t_zone **current_zone)
 #ifdef DEBUG_PAGE
 	print_chunks((*current_zone)->chunks, "after delete");
 #endif
+}
+
+void	page_free(t_zone **current_zone)
+{
+	int i;
+
 	i = 0;
+	page_free_fill_chunk_to_free(current_zone);
+	page_free_remove_chunks(current_zone);
 	while (i < (*current_zone)->pages_nbr)
 	{
 		if ((*current_zone)->state[i] == TO_FREE)
