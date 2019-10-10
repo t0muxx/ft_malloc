@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/10 11:20:14 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/10 15:00:57 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ void	delete_zone(t_zone **zone, t_zone *del, size_t size)
 	t_zone *cpy;
 
 	cpy = del;
+#ifdef DEBUG_ZONE
 	ft_putstr("delete zone : ");
 	ft_putptr(del);
 	ft_putstr(" size = : ");
 	ft_putnbr(del->size);
 	ft_putendl("");
-#ifdef DEBUG_ZONE
 	print_zones(*zone, "ZONOE BEFORE REMOVE");
 	ft_putstr("|DEBUG| -> deleting zone : ");
 	ft_putptr(del);

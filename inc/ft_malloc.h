@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/10 13:56:32 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/10 14:58:08 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@
 //# define DEBUG_FREE 1
 //# define DEBUG_PAGE 1
 //# define DEBUG_MUNMAP 1
-# define DEBUG_FREE_RET 1
+//# define DEBUG_FREE_RET 1
 //# define DEBUG_CALLOC 1
-# define DEBUG_MALLOC 1
+//# define DEBUG_MALLOC 1
 //# define DEBUG_REALLOC 1
 # define ALIGN_SIZE(x) (((x) + ((ALIGN) - 1)) & ~((ALIGN) - 1))
 
