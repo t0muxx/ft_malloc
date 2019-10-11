@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/10 15:47:11 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/11 13:55:32 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,5 @@ void	print_chunks(t_chunk *chunk, char *chunk_name);
 void	print_zones(t_zone *zone, char *zone_name);
 void	print_chunk(t_chunk *tmp);
 void	cnt_total_zone();
+void	debug_all(t_malloc *state);
 #endif

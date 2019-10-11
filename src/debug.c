@@ -6,11 +6,33 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 10:51:30 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/08 13:48:02 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/11 13:54:28 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
+
+void	print_state(enum e_status state)
+{
+	if (state == 0)
+		ft_putstr("USED");
+	if (state == 1)
+		ft_putstr("FREE");
+	if (state == 2)
+		ft_putstr("TO_FREE");
+	if (state == 3)
+		ft_putstr("TO_REMOVE");
+}
+
+void	debug_all(t_malloc *state)
+{
+	ft_putendl("|DEBUG| -> STATE OF TINY : ");
+	print_zones(state->zone_tiny, "TINY ");
+	ft_putendl("|DEBUG| -> STATE OF MEDIUM : ");
+	print_zones(state->zone_medium, "MEDIUM ");
+	ft_putendl("|DEBUG| -> STATE OF LARGE : ");
+	print_zones(state->zone_large, "LARGE ");
+}
 
 void	cnt_total_zone()
 {
@@ -104,6 +126,7 @@ void	print_zones(t_zone *zone, char *zone_name)
 {
 	t_zone	*tmp;
 	int		i;
+	int		j;
 
 	i = 0;
 	tmp = zone;
@@ -111,6 +134,7 @@ void	print_zones(t_zone *zone, char *zone_name)
 	ft_putendl(zone_name);
 	while (tmp != NULL)
 	{
+		j = 0;
 		ft_putstr("|DEBUG| -> zone num : ");
 		ft_putnbr(i);
 		ft_putendl("");
@@ -126,6 +150,16 @@ void	print_zones(t_zone *zone, char *zone_name)
 		ft_putstr("|DEBUG| -> zone->used : ");
 		ft_putnbr(tmp->used);
 		ft_putendl("");
+		ft_putstr("|DEBUG| -> Page state : \n");
+		while (j < tmp->pages_nbr)
+		{
+			ft_putstr("page : ");
+			ft_putnbr(j);
+			ft_putstr(" ; status -> ");
+			print_state(tmp->state[j]);
+			ft_putendl("");
+			j++;
+		}
 		ft_putstr("|DEBUG| -> Addr space ");
 		ft_putptr(zone_2_mem(tmp));
 		ft_putstr(" - ");

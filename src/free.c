@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 11:30:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/10 14:03:35 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/11 13:55:49 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,20 @@ void	ft_free(void *ptr)
 		chunk = ptr - sizeof(t_chunk);
 		chunk->status = FREE;
 		munmap_small_medium(&(g_malloc_state.zone_tiny));
-		return ;
 	}
-	if (search_chunk(&(g_malloc_state.zone_medium), ptr) == 1)
+	else if (search_chunk(&(g_malloc_state.zone_medium), ptr) == 1)
 	{
 		chunk = ptr - sizeof(t_chunk);
 		chunk->status = FREE;
 		munmap_small_medium(&(g_malloc_state.zone_medium));
-		return ;
 	}
-	if (search_chunk_large(&g_malloc_state.zone_large, ptr) == 1)
+	else if (search_chunk_large(&g_malloc_state.zone_large, ptr) == 1)
 	{
 		munmap_large(&g_malloc_state.zone_large, ptr);
-		return;
 	}
+	else
+		;
+	debug_all(&g_malloc_state);
 	return ;
 
 
