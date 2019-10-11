@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 10:51:30 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/11 13:54:28 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/11 14:09:07 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,8 @@ void	print_zones(t_zone *zone, char *zone_name)
 		ft_putptr(zone_2_mem(tmp));
 		ft_putstr(" - ");
 		ft_putptr(zone_2_mem(tmp) + tmp->size);
+		ft_putendl("");
+		//print_chunks(tmp->chunks, "chunks : ");
 		ft_putendl("\n----------------- NEXT ->");
 		i++;
 		tmp = tmp->next;
