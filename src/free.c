@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 11:30:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/11 13:55:49 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/11 13:57:16 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ void	ft_free(void *ptr)
 	}
 	else
 		;
+#ifdef DEBUG_STATE
 	debug_all(&g_malloc_state);
+#endif
 	return ;
 
 
