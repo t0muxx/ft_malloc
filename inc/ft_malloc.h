@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/11 13:55:32 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/12 11:28:53 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 //# define DEBUG_CALLOC 1
 //# define DEBUG_MALLOC 1
 //# define DEBUG_REALLOC 1
+## define DEBUG_STATE 1
 # define ALIGN_SIZE(x) (((x) + ((ALIGN) - 1)) & ~((ALIGN) - 1))
 
 enum			e_status {
