@@ -30,4 +30,6 @@ void	test_malloc_buggy(void **state);
 void	test_malloc_buggy_2(void **state);
 void	test_should_delete_zone(void **state);
 void	test_delete_zone(void **state);
+void	test_shrink_zone_noShrink(void **state);
+void	test_shrink_zone_shrink(void **state);
 int		cnt_chunks(t_chunk **head, size_t status);

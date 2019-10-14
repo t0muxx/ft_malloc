@@ -13,6 +13,39 @@
 #include "ft_malloc.h"
 #include "tests.h"
 
+void	test_shrink_zone_shrink(void **state)
+{
+	t_zone *zone;
+
+	zone = NULL;
+	add_zone(&zone, 16);
+	assert_ptr_not_equal(zone, NULL);
+	assert_int_equal(zone->pages_nbr, 16);
+	zone->used = 4096+100;
+	shrink_zone(&zone);
+	assert_ptr_not_equal(zone, NULL);
+	assert_int_equal(zone->used, 4096+100);
+	assert_int_equal(zone->size, 4096*2);
+	assert_int_equal(zone->state[2], FREE);
+	assert_int_equal(zone->state[3], FREE);
+	assert_int_equal(zone->pages_nbr, 2);	
+}
+
+void	test_shrink_zone_noShrink(void **state)
+{
+	t_zone *zone;
+
+	zone = NULL;
+	add_zone(&zone, 16);
+	assert_ptr_not_equal(zone, NULL);
+	assert_int_equal(zone->pages_nbr, 16);
+	zone->used = 65436;
+	shrink_zone(&zone);
+	assert_ptr_not_equal(zone, NULL);
+	assert_int_equal(zone->used, 65436);
+	assert_int_equal(zone->pages_nbr, 16);	
+}
+
 void	test_delete_zone(void **state)
 {
 	t_zone *zone;
