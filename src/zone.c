@@ -15,22 +15,52 @@
 void	shrink_zone(t_zone **zone)
 {
 	size_t	page_sup;
+	size_t	page_rm;
 	int		i;
 
 	i = 0;
+	ft_putstr("will shrink\n");
 	page_sup = aligne_large((*zone)->used);
+	page_rm = 0;
 	if (page_sup == (size_t)getpagesize() * (*zone)->pages_nbr)
 		return ;
+	if ((int)page_sup == getpagesize())
+		return ;
 	i = page_sup / getpagesize();
+	ft_putstr("i = ");
+	ft_putnbr(i);
+	ft_putendl("");
+	ft_putstr("page_nbr : ");
+	ft_putnbr((*zone)->pages_nbr);
+	ft_putendl("");
 	while (i < (*zone)->pages_nbr)
 	{
 		(*zone)->state[i] = FREE;
 		i++;
 	}
+	page_rm = (*zone)->pages_nbr - page_sup / getpagesize();
+	ft_putstr("need to remove : ");
+	ft_putnbr(page_rm);
+	ft_putendl(" pages");
+#ifdef DEBUG_MUNMAP
+	ft_putstr("zone_shrink - munmaped : ");
+	ft_putnbr(getpagesize() * page_rm);
+	ft_putendl("");
+#endif
 	munmap((void *)*zone + page_sup,
-			getpagesize() + ((*zone)->pages_nbr - page_sup));
+			getpagesize() * page_rm);
+	ft_putstr("page_nbr = ");
+	ft_putnbr(page_sup / getpagesize());
+	ft_putendl("");
 	(*zone)->pages_nbr = page_sup / getpagesize();
 	(*zone)->size = page_sup;
+	ft_putstr("zone->used : ");
+	ft_putnbr((*zone)->used);
+	ft_putendl("");
+	ft_putstr("zone->size : ");
+	ft_putnbr((*zone)->size);
+	ft_putendl("");
+	ft_putstr("end shrink\n");
 	return ;
 	
 }
@@ -85,9 +115,7 @@ void	delete_zone(t_zone **zone, t_zone *del, size_t size)
 	if (del->prev != NULL)
 		del->prev->next = del->next;
 #ifdef DEBUG_MUNMAP
-	ft_putstr("|DEBUG| munmap(");
-	ft_putptr(cpy);
-	ft_putstr(", ");
+	ft_putstr("munmaped size :");
 	ft_putnbr(size);
 	ft_putendl(");");
 #endif
@@ -141,7 +169,7 @@ t_zone		*add_zone_large(t_zone **zone, size_t size)
 	new = mmap(0, aligned,
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 #ifdef DEBUG_MMAP
-	ft_putstr("mmap -> ");
+	ft_putstr("mmaped size : ");
 	ft_putnbr(aligned);
 	ft_putendl("");
 #endif
@@ -187,7 +215,7 @@ int		add_zone(t_zone **zone, size_t pages_nbr)
 	new = mmap(0, size,
 			PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 #ifdef DEBUG_MMAP
-	ft_putstr("mmap -> ");
+	ft_putstr("mmaped size : ");
 	ft_putnbr(size);
 	ft_putendl("");
 #endif
