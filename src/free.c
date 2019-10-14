@@ -22,21 +22,29 @@ void	munmap_large(t_zone **zone, void *ptr)
 
 void	munmap_small_medium(t_zone **zones)
 {
-	t_zone *zone;
+	t_zone	*zone;
+	int		i;
 
+	i = 0;
 	zone = *zones;
 	if (cnt_zone(zone) == 1)
 		return ;
 	while (zone != NULL)
 	{
+		shrink_zone(&zone);
 		page_free(&zone);
 		if (should_delete_zone(zone))
 		{
 			delete_zone(zones, zone, getpagesize());
 			zone = *zones;
+			i = 0;
 		}
-		else	
+		else
+		{
 			zone = zone->next;
+			i++;
+		}
+
 	}
 }
 

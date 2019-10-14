@@ -33,7 +33,7 @@
 //# define DEBUG_CALLOC 1
 //# define DEBUG_MALLOC 1
 //# define DEBUG_REALLOC 1
-## define DEBUG_STATE 1
+//# define DEBUG_STATE 1
 # define ALIGN_SIZE(x) (((x) + ((ALIGN) - 1)) & ~((ALIGN) - 1))
 
 enum			e_status {
@@ -98,6 +98,7 @@ int		cnt_zone(t_zone *zone);
 int		should_delete_zone(t_zone *zone);
 void	delete_zone(t_zone **zone, t_zone *del, size_t size);
 t_zone	*add_zone_large(t_zone **zone, size_t size);
+void	shrink_zone(t_zone **zone);
 
 
 size_t	aligne_large(size_t size);

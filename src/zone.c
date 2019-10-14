@@ -12,6 +12,29 @@
 
 #include "ft_malloc.h"
 
+void	shrink_zone(t_zone **zone)
+{
+	size_t	page_sup;
+	int		i;
+
+	i = 0;
+	page_sup = aligne_large((*zone)->used);
+	if (page_sup == (size_t)getpagesize() * (*zone)->pages_nbr)
+		return ;
+	i = page_sup / getpagesize();
+	while (i < (*zone)->pages_nbr)
+	{
+		(*zone)->state[i] = FREE;
+		i++;
+	}
+	munmap((void *)*zone + page_sup,
+			getpagesize() + ((*zone)->pages_nbr - page_sup));
+	(*zone)->pages_nbr = page_sup / getpagesize();
+	(*zone)->size = page_sup;
+	return ;
+	
+}
+
 int		should_delete_zone(t_zone *zone)
 {
 	int i;
