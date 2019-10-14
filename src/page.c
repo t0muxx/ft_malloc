@@ -138,14 +138,9 @@ void	page_free(t_zone **current_zone)
 		if ((*current_zone)->state[i] == TO_FREE)
 		{
 #ifdef DEBUG_MUNMAP
-			ft_putstr("munmap : ");
-			ft_putptr((void *)*current_zone + (getpagesize() * i));
+			ft_putstr("page - munmap size : ");
+			ft_putnbr(getpagesize());
 			ft_putendl("");
-			ft_putstr("zone	 : ");
-			ft_putptr(*current_zone);
-			ft_putstr("\npage  : ");
-			ft_putnbr(i);
-			ft_putendl("\n---------");
 #endif
 			munmap((void *)*current_zone + (getpagesize() * i), getpagesize());
 			(*current_zone)->state[i] = FREE;

@@ -15,12 +15,6 @@
 int	init_malloc(void)
 {
 #ifdef DEBUG
-	ft_putstr("|DEBUG| -> size max tiny : ");
-	ft_putnbr(size_max(MULTIPLE_ZONE_TINY));
-	ft_putendl("");
-	ft_putstr("|DEBUG| -> size max medium : ");
-	ft_putnbr(size_max(MULTIPLE_ZONE_MEDIUM));
-	ft_putendl("");
 #endif
 	if (g_malloc_state.zone_tiny == NULL)
 	{

@@ -27,8 +27,6 @@ void	munmap_small_medium(t_zone **zones)
 
 	i = 0;
 	zone = *zones;
-	if (cnt_zone(zone) == 1)
-		return ;
 	while (zone != NULL)
 	{
 		shrink_zone(&zone);
@@ -78,10 +76,6 @@ void	ft_free(void *ptr)
 	return ;
 
 
-#ifdef DEBUG_FREE
-	ft_putendl("|DEBUG| -> before free");
-	print_chunks(g_malloc_state.zone_tiny->chunks, "chunk_tiny");
-#endif
 #ifdef DEBUG_FREE
 	ft_putendl("|DEBUG| -> after free");
 	print_chunks(g_malloc_state.zone_tiny->chunks, "chunk_tiny");

@@ -70,25 +70,30 @@ void	*ft_malloc(size_t size)
 {
 #ifdef DEBUG_MALLOC
 	ft_putstr("|DEBUG| -> asked for malloc(");
-	ft_putnbr(size);
+	ft_putnbr((int)size);
 	ft_putstr(");\n");
 #endif
 	if ((int)size < 0)
 	{
 		return (NULL);
 	}
+	/*
 	if (g_malloc_state.zone_tiny == NULL
 			&& g_malloc_state.zone_medium == NULL
 			&& init_malloc() != 0)
 	{
 		return (NULL);
-	}
+	}*/
 	if (size < size_max(MULTIPLE_ZONE_TINY))
 	{
+		if (g_malloc_state.zone_tiny == NULL)
+			add_zone(&(g_malloc_state.zone_tiny), MULTIPLE_ZONE_TINY);
 		return (malloc_not_large(&(g_malloc_state.zone_tiny), size));
 	}
 	else if (size < size_max(MULTIPLE_ZONE_MEDIUM))
 	{
+		if (g_malloc_state.zone_medium == NULL)
+			add_zone(&(g_malloc_state.zone_medium), MULTIPLE_ZONE_MEDIUM);
 		return (malloc_not_large(&(g_malloc_state.zone_medium), size));
 	}
 	else 
@@ -208,7 +213,7 @@ void	*realloc(void *ptr, size_t size)
 void	*malloc(size_t size)
 {
 	void *ptr;
-
+	
 	ptr = ft_malloc(size);
 #ifdef DEBUG_MALLOC
 	ft_putstr("|DEBUG| -> END | ret from malloc : ");
@@ -224,6 +229,11 @@ void	free(void *ptr)
 	ft_putstr("|DEBUG| -> asked for free(");
 	ft_putptr(ptr);
 	ft_putstr(");\n");
+#endif
+#ifdef DEBUG_FREE
+	ft_putstr("|DEBUG| -> free(");
+	ft_putptr(ptr);
+	ft_putendl(")");
 #endif
 	ft_free(ptr);
 }
