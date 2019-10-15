@@ -6,11 +6,13 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 11:30:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/11 13:57:16 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/15 16:47:40 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
+
+extern pthread_mutex_t mut;
 
 void	munmap_large(t_zone **zone, void *ptr)
 {
@@ -80,4 +82,21 @@ void	ft_free(void *ptr)
 	ft_putendl("|DEBUG| -> after free");
 	print_chunks(g_malloc_state.zone_tiny->chunks, "chunk_tiny");
 #endif
+}
+
+void	free(void *ptr)
+{
+	pthread_mutex_lock(&mut);	
+#ifdef DEBUG_FREE_RET
+	ft_putstr("|DEBUG| -> asked for free(");
+	ft_putptr(ptr);
+	ft_putstr(");\n");
+#endif
+#ifdef DEBUG_FREE
+	ft_putstr("|DEBUG| -> free(");
+	ft_putptr(ptr);
+	ft_putendl(")");
+#endif
+	ft_free(ptr);
+	pthread_mutex_unlock(&mut);	
 }

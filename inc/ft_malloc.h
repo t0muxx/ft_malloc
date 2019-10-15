@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/12 11:28:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/15 16:40:53 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ t_malloc g_malloc_state;
 */
 void	*ft_malloc(size_t size);
 void	ft_free(void *ptr);
+void	*ft_realloc(void *ptr, size_t size);
+void	*realloc_large(void *ptr, size_t size);
+void	*ft_calloc(size_t nmemb, size_t size);
 
 /*
 ** INIT :
