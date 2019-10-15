@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 16:43:17 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/15 16:55:35 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/15 19:21:26 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,35 @@ void	*realloc_large(void *ptr, size_t size)
 	return (ret);
 }
 
-void	*ft_realloc(void *ptr, size_t size)
+void	*ft_realloc_do(void *ptr, size_t size)
 {
 	t_chunk *chunk;
 	void	*ret;
 
 	ret = NULL;
 	chunk = NULL;
+	if (search_chunk_large(&(g_malloc_state.zone_large), ptr) == 1)
+		return (realloc_large(ptr, size));
+	chunk = ptr - sizeof(t_chunk);
+	if (size <= chunk->size)
+		return (ptr);
+	else
+	{
+		if ((ret = malloc(size)) == NULL)
+			return (NULL);
+		pthread_mutex_lock(&mut);
+		ft_memcpy(ret, ptr, chunk->size);
+		pthread_mutex_unlock(&mut);	
+		free(ptr);
+		return (ret);
+	}
+}
+
+void	*ft_realloc(void *ptr, size_t size)
+{
+	void	*ret;
+
+	ret = NULL;
 	if (ptr == NULL)
 		return (malloc(size));
 	if (search_chunk(&(g_malloc_state.zone_tiny), ptr) == 0
@@ -51,25 +73,7 @@ void	*ft_realloc(void *ptr, size_t size)
 		free(ptr);
 		return (NULL);
 	}
-	if (search_chunk_large(&(g_malloc_state.zone_large), ptr) == 1)
-		return (realloc_large(ptr, size));
-	chunk = ptr - sizeof(t_chunk);
-	if (size <= chunk->size)
-	{
-		pthread_mutex_unlock(&mut);	
-		return (ptr);
-	}
-	else
-	 {
-		pthread_mutex_unlock(&mut);	
-		if ((ret = malloc(size)) == NULL)
-			return (NULL);
-		pthread_mutex_lock(&mut);
-		ft_memcpy(ret, ptr, chunk->size);
-		pthread_mutex_unlock(&mut);	
-		free(ptr);
-	}
-		pthread_mutex_unlock(&mut);	
+	ret = ft_realloc_do(ptr, size);
 	return (ret);
 }
 
