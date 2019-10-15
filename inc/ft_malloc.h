@@ -28,11 +28,11 @@
 //# define DEBUG_ZONE 1
 //# define DEBUG_FREE 1
 //# define DEBUG_PAGE 1
-# define DEBUG_MUNMAP 1
-# define DEBUG_MMAP 1
+//# define DEBUG_MUNMAP 1
+//# define DEBUG_MMAP 1
 //# define DEBUG_FREE_RET 1
 //# define DEBUG_CALLOC 1
-# define DEBUG_MALLOC 1
+//# define DEBUG_MALLOC 1
 //# define DEBUG_REALLOC 1
 //# define DEBUG_STATE 1
 # define ALIGN_SIZE(x) (((x) + ((ALIGN) - 1)) & ~((ALIGN) - 1))

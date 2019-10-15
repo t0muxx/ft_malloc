@@ -19,7 +19,6 @@ void	shrink_zone(t_zone **zone)
 	int		i;
 
 	i = 0;
-	ft_putstr("will shrink\n");
 	page_sup = aligne_large((*zone)->used);
 	page_rm = 0;
 	if (page_sup == (size_t)getpagesize() * (*zone)->pages_nbr)
@@ -27,21 +26,12 @@ void	shrink_zone(t_zone **zone)
 	if ((int)page_sup == getpagesize())
 		return ;
 	i = page_sup / getpagesize();
-	ft_putstr("i = ");
-	ft_putnbr(i);
-	ft_putendl("");
-	ft_putstr("page_nbr : ");
-	ft_putnbr((*zone)->pages_nbr);
-	ft_putendl("");
 	while (i < (*zone)->pages_nbr)
 	{
 		(*zone)->state[i] = FREE;
 		i++;
 	}
 	page_rm = (*zone)->pages_nbr - page_sup / getpagesize();
-	ft_putstr("need to remove : ");
-	ft_putnbr(page_rm);
-	ft_putendl(" pages");
 #ifdef DEBUG_MUNMAP
 	ft_putstr("zone_shrink - munmaped : ");
 	ft_putnbr(getpagesize() * page_rm);
@@ -49,18 +39,8 @@ void	shrink_zone(t_zone **zone)
 #endif
 	munmap((void *)*zone + page_sup,
 			getpagesize() * page_rm);
-	ft_putstr("page_nbr = ");
-	ft_putnbr(page_sup / getpagesize());
-	ft_putendl("");
 	(*zone)->pages_nbr = page_sup / getpagesize();
-	(*zone)->size = page_sup;
-	ft_putstr("zone->used : ");
-	ft_putnbr((*zone)->used);
-	ft_putendl("");
-	ft_putstr("zone->size : ");
-	ft_putnbr((*zone)->size);
-	ft_putendl("");
-	ft_putstr("end shrink\n");
+	(*zone)->size = page_sup - sizeof(t_zone);
 	return ;
 	
 }
