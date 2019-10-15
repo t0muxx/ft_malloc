@@ -213,12 +213,22 @@ void	*realloc(void *ptr, size_t size)
 void	*malloc(size_t size)
 {
 	void *ptr;
-	
+	t_chunk *next;
+
+	next = NULL;
 	ptr = ft_malloc(size);
 #ifdef DEBUG_MALLOC
 	ft_putstr("|DEBUG| -> END | ret from malloc : ");
 	ft_putptr(ptr);
 	ft_putendl("");
+	if (ptr != NULL)
+		print_chunk(ptr - sizeof(t_chunk));
+		if (ptr == (void *)0x100b71520)
+		{
+			next = ptr - sizeof(t_chunk);	
+			if (next && next->next)
+				print_chunk(next->next);
+		}
 #endif
 	return (ptr);
 }
@@ -229,6 +239,8 @@ void	free(void *ptr)
 	ft_putstr("|DEBUG| -> asked for free(");
 	ft_putptr(ptr);
 	ft_putstr(");\n");
+	if (ptr == (void *)0x100b71520)
+		print_chunk(ptr - sizeof(t_chunk));
 #endif
 #ifdef DEBUG_FREE
 	ft_putstr("|DEBUG| -> free(");

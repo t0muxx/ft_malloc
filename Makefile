@@ -20,7 +20,7 @@ LINK =			libft_malloc.so
 
 #FLAG AND COMPILATOR#
 CC =		clang
-CFLAGS =  -g -Wall -Werror -Wextra -fPIC 
+CFLAGS =  -g -Wall -Werror -Wextra -fPIC
 
 #PATH#
 OBJ_PATH =  obj

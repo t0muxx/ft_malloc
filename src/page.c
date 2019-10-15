@@ -35,6 +35,8 @@ int		page_free_should_remove_page(t_zone **current_zone,
 		ft_putendl("chunk_check : ");
 		print_chunk(*chunk_check);
 #endif
+		if ((void *)*chunk_check == (void *)0x100b71500)
+			print_chunk(*chunk_check);
 		if ((*chunk_check)->status == TO_REMOVE)
 			state += 1;
 		else
@@ -75,6 +77,9 @@ void	page_free_fill_chunk_to_free(t_zone **current_zone)
 	p = 0;
 	chunk_check = (*current_zone)->chunks;
 	chunk_keep = chunk_check;
+	ft_putstr("page free fill : chunk check == ");
+	ft_putptr(chunk_check);
+	ft_putendl("");
 	while (p < (*current_zone)->pages_nbr)
 	{
 		if ((void *)*current_zone + (*current_zone)->used + sizeof(t_zone)
@@ -86,6 +91,9 @@ void	page_free_fill_chunk_to_free(t_zone **current_zone)
 			ft_putptr(chunk_keep);
 			ft_putendl("");
 #endif
+			ft_putstr("page = ");
+			ft_putnbr(p);
+			ft_putendl("");
 			if (page_free_should_remove_page(current_zone,
 				&chunk_check, &chunk_keep, p) == 1)
 					page_free_update_chunk_status(current_zone, &chunk_keep, p);

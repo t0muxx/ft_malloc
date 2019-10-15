@@ -29,7 +29,7 @@ void	munmap_small_medium(t_zone **zones)
 	zone = *zones;
 	while (zone != NULL)
 	{
-		shrink_zone(&zone);
+	//	shrink_zone(&zone);
 		page_free(&zone);
 		if (should_delete_zone(zone))
 		{

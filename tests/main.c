@@ -17,7 +17,6 @@
 int main(void)
 {
 	const struct CMUnitTest tests[] = {
-		/*
 		cmocka_unit_test(test_add_zone_large),
 		cmocka_unit_test(test_add_zone_null),
         cmocka_unit_test(test_add_zone_after),
@@ -38,7 +37,6 @@ int main(void)
 		cmocka_unit_test(test_page_free_Page1ManyAnd2ManyToFree),
 		cmocka_unit_test(test_page_free_Page0And1ToFree),
         cmocka_unit_test(test_delete_zone),
-		*/
         cmocka_unit_test(test_shrink_zone_noShrink),
         cmocka_unit_test(test_shrink_zone_shrink),
 
