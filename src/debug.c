@@ -85,7 +85,6 @@ void	print_chunk(t_chunk *tmp)
 	ft_putstr("|DEBUG| -> chunk->dataAddr = ");
 	ft_putptr((void *)tmp + sizeof(t_chunk));
 	ft_putendl("");
-	ft_putendl((void *)tmp + sizeof(t_chunk));
 	ft_putstr("--- END -----\n");
 }
 

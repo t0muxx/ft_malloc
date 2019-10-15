@@ -12,6 +12,8 @@
 
 #include "ft_malloc.h"
 
+pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
+
 void	*malloc_large(t_zone **zone, size_t size)
 {
 	t_zone *new;
@@ -77,13 +79,6 @@ void	*ft_malloc(size_t size)
 	{
 		return (NULL);
 	}
-	/*
-	if (g_malloc_state.zone_tiny == NULL
-			&& g_malloc_state.zone_medium == NULL
-			&& init_malloc() != 0)
-	{
-		return (NULL);
-	}*/
 	if (size < size_max(MULTIPLE_ZONE_TINY))
 	{
 		if (g_malloc_state.zone_tiny == NULL)
@@ -114,10 +109,46 @@ void	*realloc_large(void *ptr, size_t size)
 	{
 		if ((ret = malloc(size)) == NULL)
 			return (NULL);
-		ft_memcpy(ret, ptr, chunk_large->size);
+	pthread_mutex_lock(&mut);	
+	ft_memcpy(ret, ptr, chunk_large->size);
+	pthread_mutex_unlock(&mut);	
 		free(ptr);
 	}
 	return (ret);
+}
+
+size_t	malloc_good_size(size_t size)
+{
+	return (ALIGN_SIZE(size));
+}
+
+size_t	malloc_size(const void *ptr_const)
+{
+	void	*ptr;
+	t_chunk *chunk;
+	t_zone	*zone;
+
+	chunk = NULL;
+	zone = NULL;
+	ptr = (void *)ptr_const;
+	if (search_chunk(&(g_malloc_state.zone_tiny), ptr) == 0
+	&& search_chunk(&(g_malloc_state.zone_medium), ptr) == 0
+	&& search_chunk_large(&(g_malloc_state.zone_large), ptr) == 0)
+	{
+		return (0);
+	}
+	else if (search_chunk(&(g_malloc_state.zone_tiny), ptr)
+			|| search_chunk(&(g_malloc_state.zone_medium), ptr))
+	{
+		chunk = ptr - sizeof(t_chunk);
+		return (chunk->size);
+	}
+	else
+	{
+		zone = ptr - sizeof(t_zone);
+		return (zone->size);
+	}
+	return (0);
 }
 
 void	*ft_realloc(void *ptr, size_t size)
@@ -125,35 +156,49 @@ void	*ft_realloc(void *ptr, size_t size)
 	t_chunk *chunk;
 	void	*ret;
 
+	pthread_mutex_lock(&mut);	
 	ret = NULL;
 	chunk = NULL;
 	if (ptr == NULL)
-		return (ft_malloc(size));
+	{
+		pthread_mutex_unlock(&mut);	
+		return (malloc(size));
+	}
 	if (search_chunk(&(g_malloc_state.zone_tiny), ptr) == 0
 	&& search_chunk(&(g_malloc_state.zone_medium), ptr) == 0
 	&& search_chunk_large(&(g_malloc_state.zone_large), ptr) == 0)
 	{
+		pthread_mutex_unlock(&mut);	
 		return (NULL);
 	}
 	if (ptr != NULL && size == 0)
 	{
+		pthread_mutex_unlock(&mut);	
 		free(ptr);
 		return (0);
 	}
 	if (search_chunk_large(&(g_malloc_state.zone_large), ptr) == 1)
+	{
+		pthread_mutex_unlock(&mut);	
 		return (realloc_large(ptr, size));
+	}
 	chunk = ptr - sizeof(t_chunk);
 	if (size <= chunk->size)
 	{
+		pthread_mutex_unlock(&mut);	
 		return (ptr);
 	}
 	else
-	{
+	 {
+		pthread_mutex_unlock(&mut);	
 		if ((ret = malloc(size)) == NULL)
 			return (NULL);
-		ft_memcpy(ret, ptr, size);
+		pthread_mutex_lock(&mut);
+		ft_memcpy(ret, ptr, chunk->size);
+		pthread_mutex_unlock(&mut);	
 		free(ptr);
 	}
+		pthread_mutex_unlock(&mut);	
 	return (ret);
 }
 
@@ -162,7 +207,9 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	void *ptr;
 
 	if ((ptr = malloc(nmemb * size)))
+	pthread_mutex_lock(&mut);	
 		ft_memset(ptr, 0, nmemb * size);
+	pthread_mutex_unlock(&mut);	
 	return (ptr);
 }
 
@@ -213,18 +260,21 @@ void	*realloc(void *ptr, size_t size)
 void	*malloc(size_t size)
 {
 	void *ptr;
-	
+
+	pthread_mutex_lock(&mut);	
 	ptr = ft_malloc(size);
 #ifdef DEBUG_MALLOC
 	ft_putstr("|DEBUG| -> END | ret from malloc : ");
 	ft_putptr(ptr);
 	ft_putendl("");
 #endif
+	pthread_mutex_unlock(&mut);
 	return (ptr);
 }
 
 void	free(void *ptr)
 {
+	pthread_mutex_lock(&mut);	
 #ifdef DEBUG_FREE_RET
 	ft_putstr("|DEBUG| -> asked for free(");
 	ft_putptr(ptr);
@@ -236,5 +286,6 @@ void	free(void *ptr)
 	ft_putendl(")");
 #endif
 	ft_free(ptr);
+	pthread_mutex_unlock(&mut);	
 }
 

@@ -43,7 +43,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@+$(MAKE) -C libft/
-	$(CC) $(CFLAGS) -I$(INC_PATH) $(OBJ) libft/libft.a  -shared -o $(NAME)
+	$(CC) $(CFLAGS) -I$(INC_PATH) $(OBJ) libft/libft.a -lpthread  -shared -o $(NAME)
 	/bin/rm -f $(LINK)
 	ln -s $(NAME) $(LINK)
 

@@ -19,6 +19,7 @@
 # include <libft.h>
 # include <errno.h>
 # include <unistd.h>
+# include <pthread.h>
 
 # define ALIGN 16
 # define MULTIPLE_ZONE_TINY 16 
@@ -74,7 +75,6 @@ typedef struct	s_malloc
 }				t_malloc;
 
 t_malloc g_malloc_state;
-
 /*
 ** Front fucntion 
 */
