@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 07:53:33 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/16 08:02:30 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/16 12:23:34 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	show_alloc_mem_print_chunks(t_chunk *chunks)
 		ft_putstr(" : ");
 		ft_putnbr(chunk->size);
 		ft_putstr(" octets\n");
+		ft_print_mem((void *)chunk + sizeof(t_chunk), chunk->size);
+		ft_putendl("");
 		chunk = chunk->next;
 	}
 }
