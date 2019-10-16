@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2019/10/15 16:48:30 by tmaraval         ###   ########.fr        #
+#    Updated: 2019/10/16 07:45:02 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,13 +31,13 @@ SRCS = malloc.c \
 	   realloc.c \
 	   calloc.c \
 	   malloc_size.c \
-	   init.c \
 	   debug.c \
 	   free.c \
 	   utils.c \
 	   zone.c \
 	   chunks.c \
-	   page.c 
+	   page.c \
+	   show_alloc_mem.c 
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRCS))
