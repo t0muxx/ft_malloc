@@ -12,8 +12,8 @@ if [ $OS == "Linux" ] ; then
 #	export DEBUG_CALLOC_RET=1
 #	export DEBUG_REALLOC=1
 #	export DEBUG_REALLOC_RET=1
-	export DEBUG_MMAP=1
-	export DEBUG_MUNMAP=1
+#	export DEBUG_MMAP=1
+#	export DEBUG_MUNMAP=1
 	$@
 else
 	export DYLD_LIBRARY_PATH=.
