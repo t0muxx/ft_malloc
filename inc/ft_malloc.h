@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/16 12:01:28 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:03:32 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,21 @@
 # define ALIGN 16
 # define MULTIPLE_ZONE_TINY 16 
 # define MULTIPLE_ZONE_MEDIUM 32
-//# define DEBUG 0
-//# define DEBUG_CHUNK 1
-//# define DEBUG_ZONE 1
-# define DEBUG_FREE 1
-//# define DEBUG_PAGE 1
-//# define DEBUG_MUNMAP 1
-//# define DEBUG_MMAP 1
-//# define DEBUG_FREE_RET 1
-//# define DEBUG_CALLOC 1
-//# define DEBUG_MALLOC 1
-//# define DEBUG_REALLOC 1
-//# define DEBUG_STATE 1
+
+/*
+* ENV debug variable :
+* DEBUG_FREE : will print all call to free();
+* DEBUG_FREE_MEM : will print chunk mem before free
+* DEBUG_MALLOC : will print all call to malloc();
+* DEBUG_MALLOC_RET : will print return value from malloc();
+* DEBUG_CALLOC : will print all call to calloc();
+* DEBUG_CALLOC_RET : will print return value from calloc();
+* DEBUG_REALLOC : will print all call to realloc();
+* DEBUG_REALLOC_RET : will print return value from realloc();
+* DEBUG_MUNMAP : will print each call to munmap();
+* DEBUG_MMAP : will print each call to mmap();
+*/ 
+
 # define ALIGN_SIZE(x) (((x) + ((ALIGN) - 1)) & ~((ALIGN) - 1))
 
 enum			e_status {
@@ -124,9 +127,5 @@ int		search_chunk_large(t_zone **zones, void *ptr);
 size_t	size_max(size_t multiple);
 
 //DEBUG : 
-void	print_chunks(t_chunk *chunk, char *chunk_name);
-void	print_zones(t_zone *zone, char *zone_name);
-void	print_chunk(t_chunk *tmp);
-void	cnt_total_zone();
-void	debug_all(t_malloc *state);
+void	debug_munmap(void *addr, size_t size);
 #endif

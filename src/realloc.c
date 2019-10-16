@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 16:43:17 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/15 19:21:26 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/16 12:48:42 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,20 @@ void	*realloc(void *ptr, size_t size)
 	void *ret;
 
 	ret = NULL;
-#ifdef DEBUG_REALLOC
-	ft_putstr("|DEBUG| -> realloc(");
-	ft_putptr(ptr);
-	ft_putstr(", ");
-	ft_putnbr((int)size);
-	ft_putendl(");");
-
-#endif
+	if (getenv("DEBUG_REALLOC"))
+	{
+		ft_putstr("|DEBUG| -> realloc(");
+		ft_putptr(ptr);
+		ft_putstr(", ");
+		ft_putnbr((int)size);
+		ft_putendl(");");
+	}
 	ret = ft_realloc(ptr, size);
-#ifdef DEBUG_REALLOC
-	ft_putstr("|DEBUG| -> END | ret from realloc : ");
-	ft_putptr(ret);
-	ft_putendl("");
-#endif
-
+	if (getenv("DEBUG_REALLOC_RET"))
+	{
+		ft_putstr("|DEBUG| -> ret from realloc : ");
+		ft_putptr(ret);
+		ft_putendl("");
+	}
 	return (ret);
 }

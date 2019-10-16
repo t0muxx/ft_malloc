@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/10 15:00:57 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:01:09 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ void	shrink_zone(t_zone **zone)
 		i++;
 	}
 	page_rm = (*zone)->pages_nbr - page_sup / getpagesize();
-#ifdef DEBUG_MUNMAP
-	ft_putstr("zone_shrink - munmaped : ");
-	ft_putnbr(getpagesize() * page_rm);
-	ft_putendl("");
-#endif
 	munmap((void *)*zone + page_sup,
 			getpagesize() * page_rm);
 	(*zone)->pages_nbr = page_sup / getpagesize();
@@ -75,17 +70,6 @@ void	delete_zone(t_zone **zone, t_zone *del, size_t size)
 	t_zone *cpy;
 
 	cpy = del;
-#ifdef DEBUG_ZONE
-	ft_putstr("delete zone : ");
-	ft_putptr(del);
-	ft_putstr(" size = : ");
-	ft_putnbr(del->size);
-	ft_putendl("");
-	print_zones(*zone, "ZONOE BEFORE REMOVE");
-	ft_putstr("|DEBUG| -> deleting zone : ");
-	ft_putptr(del);
-	ft_putendl("");
-#endif
 	if (*zone == NULL || del == NULL)
 		return ;
 	if (*zone == del)
@@ -94,15 +78,8 @@ void	delete_zone(t_zone **zone, t_zone *del, size_t size)
 		del->next->prev = del->prev;
 	if (del->prev != NULL)
 		del->prev->next = del->next;
-#ifdef DEBUG_MUNMAP
-	ft_putstr("munmaped size :");
-	ft_putnbr(size);
-	ft_putendl(");");
-#endif
+	debug_munmap(cpy, size);
 	munmap(cpy, size);
-#ifdef DEBUG_ZONE
-	print_zones(*zone, "ZONOE AFTER REMOVE");
-#endif
 }
 
 /*
@@ -124,9 +101,6 @@ t_zone	*search_zone(t_zone **zone, size_t size)
 			return (tmp);
 		tmp = tmp->next;
 	}
-#ifdef DEBUG_ZONE
-	ft_putendl("|DEBUG| -> need to add new zone !");
-#endif
 	if (add_zone(zone, pages_nbr) != 0)
 	{
 		ft_putendl_fd("malloc : error adding zone !\n", 2);
@@ -148,11 +122,12 @@ t_zone		*add_zone_large(t_zone **zone, size_t size)
 	aligned = aligne_large(size + sizeof(t_zone));
 	new = mmap(0, aligned,
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
-#ifdef DEBUG_MMAP
-	ft_putstr("mmaped size : ");
-	ft_putnbr(aligned);
-	ft_putendl("");
-#endif
+	if (getenv("DEBUG_MMAP"))
+	{
+		ft_putstr("|DEBUG| -> mmaped size : ");
+		ft_putnbr(aligned);
+		ft_putendl("");
+	}
 	if (new == MAP_FAILED)
 	{
 		ft_putendl_fd("malloc : can't mmap memory for zone_tiny", 2);
@@ -174,9 +149,6 @@ t_zone		*add_zone_large(t_zone **zone, size_t size)
 		head->next = new;
 		new->prev = head;
 	}
-#ifdef DEBUG_ZONE
-	print_zones(*zone, "zones_larges :");
-#endif
 	return (new);
 }
 
@@ -194,11 +166,12 @@ int		add_zone(t_zone **zone, size_t pages_nbr)
 	size = getpagesize() * pages_nbr;
 	new = mmap(0, size,
 			PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
-#ifdef DEBUG_MMAP
-	ft_putstr("mmaped size : ");
-	ft_putnbr(size);
-	ft_putendl("");
-#endif
+	if (getenv("DEBUG_MMAP"))
+	{
+		ft_putstr("|DEBUG| -> mmaped size : ");
+		ft_putnbr(size);
+		ft_putendl("");
+	}
 	if (new == MAP_FAILED)
 	{
 		ft_putendl_fd("malloc : can't mmap memory for zone_tiny", 2);
@@ -222,8 +195,5 @@ int		add_zone(t_zone **zone, size_t pages_nbr)
 		head->next = new;
 		new->prev = head;
 	}
-#ifdef DEBUG_ZONE
-	print_zones(*zone, "zones :");
-#endif
 	return (0);
 }
