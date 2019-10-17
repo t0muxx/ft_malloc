@@ -6,7 +6,7 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 07:53:33 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/17 09:35:58 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/17 12:09:33 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	show_alloc_mem_print_chunks(t_chunk *chunks)
 void	show_alloc_mem_print_large(t_zone *zones)
 {
 	t_zone *zone;
-	
+
 	zone = zones;
 	while (zone)
 	{
@@ -69,9 +69,9 @@ void	show_alloc_mem_print_small(t_zone *zones, char *size)
 	}
 }
 
-void	show_alloc_mem()
+void	show_alloc_mem(void)
 {
-	show_alloc_mem_print_small(g_malloc_state.zone_tiny, "TINY");	
+	show_alloc_mem_print_small(g_malloc_state.zone_tiny, "TINY");
 	show_alloc_mem_print_small(g_malloc_state.zone_medium, "MEDIUM");
 	show_alloc_mem_print_large(g_malloc_state.zone_large);
 }
