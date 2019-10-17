@@ -6,13 +6,13 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:20:19 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/17 10:09:12 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/17 12:07:29 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t g_mut = PTHREAD_MUTEX_INITIALIZER;
 t_malloc		g_malloc_state = {NULL, NULL, NULL, 0};
 
 void	*malloc_large(t_zone **zone, size_t size)
@@ -72,7 +72,7 @@ void	*ft_malloc(size_t size)
 		}
 		return (malloc_not_large(&(g_malloc_state.zone_medium), size));
 	}
-	else 
+	else
 		return (malloc_large(&(g_malloc_state.zone_large), size));
 	return (NULL);
 }
@@ -89,7 +89,7 @@ void	*malloc(size_t size)
 		ft_putnbr(size);
 		ft_putendl(");");
 	}
-	pthread_mutex_lock(&mut);	
+	pthread_mutex_lock(&g_mut);
 	ptr = ft_malloc(size);
 	if (g_malloc_state.opt & DEBUG_MALLOC_RET)
 	{
@@ -97,6 +97,6 @@ void	*malloc(size_t size)
 		ft_putptr(ptr);
 		ft_putendl("");
 	}
-	pthread_mutex_unlock(&mut);
+	pthread_mutex_unlock(&g_mut);
 	return (ptr);
 }
