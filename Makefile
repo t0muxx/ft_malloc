@@ -6,7 +6,7 @@
 #    By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/24 11:50:56 by tmaraval          #+#    #+#              #
-#    Updated: 2019/10/17 12:13:40 by tmaraval         ###   ########.fr        #
+#    Updated: 2019/10/17 12:20:53 by tmaraval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRCS = malloc.c \
 	   debug.c \
 	   free.c \
 	   utils.c \
-	   utils_r.c \
+	   utils_2.c \
 	   zone.c \
 	   zone_add.c \
 	   chunks.c \
