@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 15:14:50 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/16 13:01:09 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/17 12:14:15 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,11 @@ void	shrink_zone(t_zone **zone)
 	(*zone)->pages_nbr = page_sup / getpagesize();
 	(*zone)->size = page_sup - sizeof(t_zone);
 	return ;
-	
 }
 
 int		should_delete_zone(t_zone *zone)
 {
-	int i;
+	int		i;
 	t_chunk *chunk;
 
 	i = 1;
@@ -110,90 +109,4 @@ t_zone	*search_zone(t_zone **zone, size_t size)
 	while (tmp->next != NULL)
 		tmp = tmp->next;
 	return (tmp);
-}
-
-t_zone		*add_zone_large(t_zone **zone, size_t size)
-{
-	t_zone *head;
-	t_zone *new;
-	size_t aligned;
-
-	new = NULL;
-	aligned = aligne_large(size + sizeof(t_zone));
-	new = mmap(0, aligned,
-		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
-	if (getenv("DEBUG_MMAP"))
-	{
-		ft_putstr("|DEBUG| -> mmaped size : ");
-		ft_putnbr(aligned);
-		ft_putendl("");
-	}
-	if (new == MAP_FAILED)
-	{
-		ft_putendl_fd("malloc : can't mmap memory for zone_tiny", 2);
-		return (NULL);
-	}
-	ft_memset(new, 0, aligned);
-	new->size = size;
-	new->used = 0;
-	new->next = NULL;
-	new->pages_nbr = 0;
-	new->chunks = NULL;
-	head = *zone;
-	if (*zone == NULL)
-		*zone = new;
-	else
-	{
-		while (head->next != NULL)
-			head = head->next;
-		head->next = new;
-		new->prev = head;
-	}
-	return (new);
-}
-
-/*
-** Add new zone, the 0x1000 here is for the t_zone struct
-*/
-
-int		add_zone(t_zone **zone, size_t pages_nbr)
-{
-	t_zone	*head;
-	t_zone	*new;
-	size_t	size;
-
-	new = NULL;
-	size = getpagesize() * pages_nbr;
-	new = mmap(0, size,
-			PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
-	if (getenv("DEBUG_MMAP"))
-	{
-		ft_putstr("|DEBUG| -> mmaped size : ");
-		ft_putnbr(size);
-		ft_putendl("");
-	}
-	if (new == MAP_FAILED)
-	{
-		ft_putendl_fd("malloc : can't mmap memory for zone_tiny", 2);
-		return (-1);
-	}
-	ft_memset(new, 0, size);
-	new->size = size - sizeof(t_zone);
-	new->used = 0;
-	new->next = NULL;
-	new->prev = NULL;
-	new->pages_nbr = pages_nbr;
-	ft_memset(new->state, USED, pages_nbr);
-	new->chunks = NULL;
-	head = *zone;
-	if (*zone == NULL)
-		*zone = new;
-	else
-	{
-		while (head->next != NULL)
-			head = head->next;
-		head->next = new;
-		new->prev = head;
-	}
-	return (0);
 }
