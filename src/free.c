@@ -6,13 +6,14 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 11:30:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/16 12:41:04 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/17 10:12:57 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
 extern pthread_mutex_t mut;
+extern t_malloc			g_malloc_state;
 
 void	munmap_large(t_zone **zone, void *ptr)
 {
@@ -57,7 +58,7 @@ void	ft_free(void *ptr)
 	if (search_chunk(&(g_malloc_state.zone_tiny), ptr) == 1)
 	{
 		chunk = ptr - sizeof(t_chunk);
-		if (getenv("DEBUG_FREE_MEM"))
+		if (g_malloc_state.opt & DEBUG_FREE_MEM)
 			ft_print_mem((void *)ptr, chunk->size);
 		chunk->status = FREE;
 		munmap_small_medium(&(g_malloc_state.zone_tiny));
@@ -65,7 +66,7 @@ void	ft_free(void *ptr)
 	else if (search_chunk(&(g_malloc_state.zone_medium), ptr) == 1)
 	{
 		chunk = ptr - sizeof(t_chunk);
-		if (getenv("DEBUG_FREE_MEM"))
+		if (g_malloc_state.opt & DEBUG_FREE_MEM)
 			ft_print_mem((void *)ptr, chunk->size);
 		chunk->status = FREE;
 		munmap_small_medium(&(g_malloc_state.zone_medium));
@@ -77,7 +78,7 @@ void	ft_free(void *ptr)
 void	free(void *ptr)
 {
 	pthread_mutex_lock(&mut);	
-	if (getenv("DEBUG_FREE"))
+	if (g_malloc_state.opt & DEBUG_FREE)
 	{
 		ft_putstr("|DEBUG| -> free(");
 		ft_putptr(ptr);

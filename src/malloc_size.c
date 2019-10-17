@@ -6,11 +6,13 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 16:45:31 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/15 16:45:53 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/17 09:35:46 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
+
+extern t_malloc			g_malloc_state;
 
 size_t	malloc_good_size(size_t size)
 {

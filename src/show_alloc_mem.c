@@ -6,11 +6,13 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 07:53:33 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/16 12:23:34 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/17 09:35:58 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
+
+extern t_malloc			g_malloc_state;
 
 void	show_alloc_mem_print_chunks(t_chunk *chunks)
 {

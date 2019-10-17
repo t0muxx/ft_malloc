@@ -6,13 +6,14 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 16:43:17 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/16 12:48:42 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/17 10:13:43 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-extern pthread_mutex_t mut;
+extern pthread_mutex_t	mut;
+extern t_malloc			g_malloc_state;
 
 void	*realloc_large(void *ptr, size_t size)
 {
@@ -82,7 +83,7 @@ void	*realloc(void *ptr, size_t size)
 	void *ret;
 
 	ret = NULL;
-	if (getenv("DEBUG_REALLOC"))
+	if (g_malloc_state.opt & DEBUG_REALLOC)
 	{
 		ft_putstr("|DEBUG| -> realloc(");
 		ft_putptr(ptr);
@@ -91,7 +92,7 @@ void	*realloc(void *ptr, size_t size)
 		ft_putendl(");");
 	}
 	ret = ft_realloc(ptr, size);
-	if (getenv("DEBUG_REALLOC_RET"))
+	if (g_malloc_state.opt & DEBUG_REALLOC_RET)
 	{
 		ft_putstr("|DEBUG| -> ret from realloc : ");
 		ft_putptr(ret);

@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/16 13:03:32 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/17 10:08:56 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,17 @@
 * DEBUG_MUNMAP : will print each call to munmap();
 * DEBUG_MMAP : will print each call to mmap();
 */ 
+
+# define DEBUG_FREE 1
+# define DEBUG_FREE_MEM 2
+# define DEBUG_MALLOC 4
+# define DEBUG_MALLOC_RET 8
+# define DEBUG_CALLOC 16
+# define DEBUG_CALLOC_RET 32
+# define DEBUG_REALLOC 64
+# define DEBUG_REALLOC_RET 128
+# define DEBUG_MUNMAP 256
+# define DEBUG_MMAP 512
 
 # define ALIGN_SIZE(x) (((x) + ((ALIGN) - 1)) & ~((ALIGN) - 1))
 
@@ -74,10 +85,10 @@ typedef struct	s_malloc
 	t_zone			*zone_tiny;
 	t_zone			*zone_medium;
 	t_zone			*zone_large;
+	unsigned long	opt;
 
 }				t_malloc;
 
-t_malloc g_malloc_state;
 /*
 ** Front fucntion 
 */
@@ -104,7 +115,9 @@ t_zone	*add_zone_large(t_zone **zone, size_t size);
 void	shrink_zone(t_zone **zone);
 
 
+void	init_opt(unsigned long *opt);
 size_t	aligne_large(size_t size);
+size_t	size_max(size_t multiple);
 
 /*
 ** PAGE :
@@ -124,7 +137,6 @@ void	delete_chunk(t_chunk **head, t_chunk *toDelete);
 void 	*search_free_chunk(t_zone *head, size_t sz_aligned);
 int		search_chunk_large(t_zone **zones, void *ptr);
 
-size_t	size_max(size_t multiple);
 
 //DEBUG : 
 void	debug_munmap(void *addr, size_t size);

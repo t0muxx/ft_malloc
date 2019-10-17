@@ -6,13 +6,14 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 15:20:19 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/16 12:50:54 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/17 10:09:12 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
 pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
+t_malloc		g_malloc_state = {NULL, NULL, NULL, 0};
 
 void	*malloc_large(t_zone **zone, size_t size)
 {
@@ -80,7 +81,9 @@ void	*malloc(size_t size)
 {
 	void *ptr;
 
-	if (getenv("DEBUG_MALLOC_RET"))
+	if (g_malloc_state.opt == 0)
+		init_opt(&(g_malloc_state.opt));
+	if (g_malloc_state.opt & DEBUG_MALLOC)
 	{
 		ft_putstr("|DEBUG| -> malloc(");
 		ft_putnbr(size);
@@ -88,7 +91,7 @@ void	*malloc(size_t size)
 	}
 	pthread_mutex_lock(&mut);	
 	ptr = ft_malloc(size);
-	if (getenv("DEBUG_MALLOC_RET"))
+	if (g_malloc_state.opt & DEBUG_MALLOC_RET)
 	{
 		ft_putstr("|DEBUG| -> ret from malloc : ");
 		ft_putptr(ptr);
