@@ -6,19 +6,20 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 16:43:17 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/17 10:13:43 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/17 12:08:56 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-extern pthread_mutex_t	mut;
+extern pthread_mutex_t	g_mut;
 extern t_malloc			g_malloc_state;
 
 void	*realloc_large(void *ptr, size_t size)
 {
 	t_zone	*chunk_large;
 	void	*ret;
+
 	chunk_large = ptr - sizeof(t_zone);
 	if (size <= chunk_large->size)
 		return (ptr);
@@ -26,9 +27,9 @@ void	*realloc_large(void *ptr, size_t size)
 	{
 		if ((ret = malloc(size)) == NULL)
 			return (NULL);
-	pthread_mutex_lock(&mut);	
-	ft_memcpy(ret, ptr, chunk_large->size);
-	pthread_mutex_unlock(&mut);	
+		pthread_mutex_lock(&g_mut);
+		ft_memcpy(ret, ptr, chunk_large->size);
+		pthread_mutex_unlock(&g_mut);
 		free(ptr);
 	}
 	return (ret);
@@ -50,9 +51,9 @@ void	*ft_realloc_do(void *ptr, size_t size)
 	{
 		if ((ret = malloc(size)) == NULL)
 			return (NULL);
-		pthread_mutex_lock(&mut);
+		pthread_mutex_lock(&g_mut);
 		ft_memcpy(ret, ptr, chunk->size);
-		pthread_mutex_unlock(&mut);	
+		pthread_mutex_unlock(&g_mut);
 		free(ptr);
 		return (ret);
 	}
