@@ -6,13 +6,13 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 11:30:28 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/17 10:12:57 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/17 12:06:58 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-extern pthread_mutex_t mut;
+extern pthread_mutex_t g_mut;
 extern t_malloc			g_malloc_state;
 
 void	munmap_large(t_zone **zone, void *ptr)
@@ -45,7 +45,6 @@ void	munmap_small_medium(t_zone **zones)
 			zone = zone->next;
 			i++;
 		}
-
 	}
 }
 
@@ -77,7 +76,7 @@ void	ft_free(void *ptr)
 
 void	free(void *ptr)
 {
-	pthread_mutex_lock(&mut);	
+	pthread_mutex_lock(&g_mut);
 	if (g_malloc_state.opt & DEBUG_FREE)
 	{
 		ft_putstr("|DEBUG| -> free(");
@@ -85,5 +84,5 @@ void	free(void *ptr)
 		ft_putendl(");");
 	}
 	ft_free(ptr);
-	pthread_mutex_unlock(&mut);	
+	pthread_mutex_unlock(&g_mut);
 }
