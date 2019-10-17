@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 14:51:56 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/17 10:08:08 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/17 10:42:06 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	init_opt(unsigned long *opt)
 {
+	if (!(*opt & OPT_SET))
+		*opt |= 1UL << 10;
 	if (getenv("DEBUG_FREE"))
 		*opt |= 1UL << 0;
 	if (getenv("DEBUG_FREE_MEM"))

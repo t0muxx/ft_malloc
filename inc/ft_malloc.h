@@ -6,7 +6,7 @@
 /*   By: tmaraval <tmaraval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:57:13 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/17 10:08:56 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/17 10:41:16 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@
 # define DEBUG_REALLOC_RET 128
 # define DEBUG_MUNMAP 256
 # define DEBUG_MMAP 512
+# define OPT_SET 1024
 
 # define ALIGN_SIZE(x) (((x) + ((ALIGN) - 1)) & ~((ALIGN) - 1))
 
