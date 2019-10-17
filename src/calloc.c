@@ -6,13 +6,13 @@
 /*   By: tmaraval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 16:46:06 by tmaraval          #+#    #+#             */
-/*   Updated: 2019/10/17 10:10:59 by tmaraval         ###   ########.fr       */
+/*   Updated: 2019/10/17 12:05:14 by tmaraval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-extern pthread_mutex_t	mut;
+extern pthread_mutex_t	g_mut;
 extern t_malloc			g_malloc_state;
 
 void	*ft_calloc(size_t nmemb, size_t size)
@@ -20,13 +20,15 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	void *ptr;
 
 	if ((ptr = malloc(nmemb * size)))
-	pthread_mutex_lock(&mut);	
-	ft_memset(ptr, 0, nmemb * size);
-	pthread_mutex_unlock(&mut);	
+	{
+		pthread_mutex_lock(&g_mut);
+		ft_memset(ptr, 0, nmemb * size);
+		pthread_mutex_unlock(&g_mut);
+	}
 	return (ptr);
 }
 
-void *calloc(size_t nmemb, size_t size)
+void	*calloc(size_t nmemb, size_t size)
 {
 	void *ret;
 
